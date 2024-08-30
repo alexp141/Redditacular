@@ -6,8 +6,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="container pt-6">
-      <h1>Your Feed</h1>
-      <div className="grid grid-cols-3 pt-4 gap-x-8">
+      <h1 className="text-3xl font-semibold">Your Feed</h1>
+      <div className="grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
         <Feed />
         {/*  subreddit info panel */}
@@ -22,9 +22,11 @@ export default function Home() {
                 Your personal frontpage. Come here to check in with your
                 favorite communities.
               </p>
-              <Link href={"/create"} className="w-full mt-6">
-                Create Community
-              </Link>
+              <Button asChild>
+                <Link href={"/create"} className="w-full mt-6">
+                  Create Community
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
