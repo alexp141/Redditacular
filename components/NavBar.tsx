@@ -1,9 +1,17 @@
-import { Search } from "lucide-react";
+import {
+  LoginLink,
+  LogoutLink,
+  RegisterLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import { Command, CommandInput } from "./ui/command";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import ProfileDropdown from "./ProfileDropdown";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   return (
     <div className="bg-muted py-4">
       <div className="container flex items-center justify-between">
@@ -21,7 +29,25 @@ export default function Navbar() {
             Search
           </Button>
         </div>
-        <Button type="button">Sign in </Button>
+        <div className="flex gap-2">
+          {user ? (
+            <>
+              <ProfileDropdown user={user} />
+              <Button asChild>
+                <LogoutLink>Logout</LogoutLink>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button asChild>
+                <LoginLink>Sign in</LoginLink>
+              </Button>
+              <Button asChild>
+                <RegisterLink>Register</RegisterLink>
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
