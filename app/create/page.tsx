@@ -2,11 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { createSubreddit } from "@/lib/actions";
+import { redirect } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   return (
     <main className=" max-w-5xl mx-auto">
-      <form action="">
+      <form action={createSubreddit}>
         <h1 className="text-2xl font-bold mt-4">Create a New Subreddit</h1>
         <Separator className="my-4" />
 
@@ -17,7 +19,14 @@ export default function page() {
           Subreddit names cannot be changed.
         </p>
         <div className="relative mt-4">
-          <Input type="text" className="pl-6" />
+          <Input
+            type="text"
+            className="pl-6"
+            name="subName"
+            required
+            minLength={2}
+            maxLength={24}
+          />
           <p className="absolute left-0 h-full flex items-center top-0 w-8 justify-center text-muted-foreground">
             r/
           </p>

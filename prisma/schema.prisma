@@ -21,7 +21,7 @@ model Post {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id
   username  String   @unique
   email     String?  @unique
   firstName String?
@@ -40,7 +40,7 @@ model Subreddit {
   owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   String
 
-  Post        Post[]
+  posts       Post[]
   subscribers Subscription[]
 }
 
