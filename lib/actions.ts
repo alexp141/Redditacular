@@ -18,6 +18,5 @@ export async function createSubreddit(formData: FormData) {
     data: { name: subName, ownerId: user.id },
   });
 
-  console.log(data.name);
   return redirect(`/r/${subName}`);
 }
