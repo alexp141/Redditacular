@@ -11,13 +11,13 @@ generator client {
 model Post {
   id        Int      @id @default(autoincrement())
   title     String
-  content   Json?
+  content   Json
   image     String?
   createdAt DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
 
-  Subreddit Subreddit? @relation(fields: [subName], references: [name])
+  Subreddit Subreddit @relation(fields: [subName], references: [name])
   subName   String
 }
 

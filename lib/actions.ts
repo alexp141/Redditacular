@@ -30,6 +30,7 @@ export async function createPost(
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
+  console.log("user id", user.id);
   if (!user) {
     redirect("/api/auth/login");
   }
@@ -38,15 +39,25 @@ export async function createPost(
   const imageString = formData.get("image") as string;
   const subName = formData.get("subName") as string;
 
-  const data = prisma.post.create({
+  console.log("JSON CONTENT", content);
+  console.log("sub name", subName);
+  if (!content) {
+    throw new Error("The content of the post is empty");
+  }
+
+  const data = await prisma.post.create({
     data: {
       authorId: user.id,
       title,
-      subName,
-      content: content ?? undefined,
+      content: content,
       image: imageString,
+      subName,
     },
   });
+
+  if (!data.id) {
+    throw new Error("Error creating post");
+  }
 
   redirect(`/r/${subName}`);
 }

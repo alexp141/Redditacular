@@ -6,7 +6,18 @@ import {
   EditorContent,
   JSONContent,
 } from "@tiptap/react";
+import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
+import { Dispatch, SetStateAction, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { UploadDropzone } from "./uploadthing";
 
 export const Menubar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
@@ -72,6 +83,33 @@ export const Menubar = ({ editor }: { editor: Editor | null }) => {
       >
         Undo
       </Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant={"outline"}>Upload Image</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Upload a new image</DialogTitle>
+            <DialogDescription>
+              Images can be no greater than 4MB
+            </DialogDescription>
+          </DialogHeader>
+          <UploadDropzone
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              // Do something with the response
+              console.log("Files: ", res);
+              editor.chain().focus().setImage({ src: res[0].url }).run();
+              console.log("Upload Completed");
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
@@ -84,7 +122,7 @@ export function TipTap({
   json: JSONContent | null;
 }) {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Image],
     content: json ?? "<p>Hello world</p>",
     editorProps: {
       attributes: {
@@ -93,6 +131,7 @@ export function TipTap({
     },
     onUpdate: (props) => {
       setJson(props.editor.getJSON());
+      console.log("current Jason", props.editor.getJSON());
     },
   });
   return (

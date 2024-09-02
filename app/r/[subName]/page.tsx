@@ -15,7 +15,7 @@ export default async function page({
 
   return (
     <div>
-      <Link href={`/r/${params.subName}/create`}></Link>
+      <Link href={`/r/${params.subName}/create`}>create page</Link>
       subreddit {params.subName}
     </div>
   );
