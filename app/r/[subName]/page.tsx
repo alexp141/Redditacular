@@ -1,4 +1,5 @@
 import { checkIfSubredditExists } from "@/lib/data";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function page({
@@ -12,5 +13,10 @@ export default async function page({
     return notFound();
   }
 
-  return <h1>subreddit {params.subName}</h1>;
+  return (
+    <div>
+      <Link href={`/r/${params.subName}/create`}></Link>
+      subreddit {params.subName}
+    </div>
+  );
 }
