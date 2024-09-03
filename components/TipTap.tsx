@@ -131,7 +131,6 @@ export function TipTap({
     },
     onUpdate: (props) => {
       setJson(props.editor.getJSON());
-      console.log("current Jason", props.editor.getJSON());
     },
   });
   return (

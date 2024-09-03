@@ -1,3 +1,4 @@
+import PostFeed from "@/components/PostFeed";
 import { checkIfSubredditExists } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,7 +17,8 @@ export default async function page({
   return (
     <div>
       <Link href={`/r/${params.subName}/create`}>create page</Link>
-      subreddit {params.subName}
+      <div>subreddit {params.subName}</div>
+      <PostFeed subName={params.subName} />
     </div>
   );
 }
