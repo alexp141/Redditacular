@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import Link from "next/link";
+import Avatar from "./Avatar";
 export default function ProfileDropdown({
   user,
 }: {
@@ -17,9 +18,7 @@ export default function ProfileDropdown({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="w-10 h-full rounded-full overflow-hidden">
-          <img src={profilePic ?? "/pfpfallback.png"} alt="avatar" />
-        </div>
+        <Avatar profilePic={profilePic} />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

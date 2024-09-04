@@ -1,5 +1,6 @@
 import { JsonValue } from "@prisma/client/runtime/library";
 import prisma from "./db";
+import { PostInfo } from "./types";
 
 type Post = {
   id: number;
@@ -30,7 +31,7 @@ export async function getPosts({
   subName: string;
 }) {
   const res = await fetch(`/api/test?subName=${subName}&cursor=${pageParam}`);
-  const data: Post[] = await res.json();
+  const data: PostInfo[] = await res.json();
   console.log("returned data", data);
   return data;
 }

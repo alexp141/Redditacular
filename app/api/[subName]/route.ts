@@ -10,6 +10,15 @@ export async function GET(req: Request) {
 
   if (cursor === 1) {
     queryData = await prisma.post.findMany({
+      include: {
+        author: { select: { username: true } },
+        votes: {
+          select: {
+            userId: true,
+            vote: true,
+          },
+        },
+      },
       take: Number(process.env.MAXIMUM_POSTS_PER_FEED),
       orderBy: {
         id: "asc",
@@ -17,6 +26,15 @@ export async function GET(req: Request) {
     });
   } else {
     queryData = await prisma.post.findMany({
+      include: {
+        author: { select: { username: true } },
+        votes: {
+          select: {
+            userId: true,
+            vote: true,
+          },
+        },
+      },
       skip: 1,
       take: Number(process.env.MAXIMUM_POSTS_PER_FEED),
       cursor: {
@@ -28,5 +46,7 @@ export async function GET(req: Request) {
     });
   }
 
+
+  
   return NextResponse.json(queryData);
 }

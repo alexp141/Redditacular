@@ -51,10 +51,7 @@ export default function PostCreator({ subName }: { subName: string }) {
             }}
           />
         </form>
-        <TipTap
-          setJson={setEditorJSON}
-          json={editorJSON}
-        />
+        <TipTap setJson={setEditorJSON} json={editorJSON} editable={true} />
         <CardFooter className="flex justify-end">
           <Button type="submit" form="createPostform">
             Submit Post

@@ -8,7 +8,6 @@ import {
 } from "@tiptap/react";
 import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
-import { Dispatch, SetStateAction, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +17,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { UploadDropzone } from "./uploadthing";
+import { JsonValue } from "@prisma/client/runtime/library";
 
 export const Menubar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
@@ -117,9 +117,11 @@ export const Menubar = ({ editor }: { editor: Editor | null }) => {
 export function TipTap({
   setJson,
   json,
+  editable = false,
 }: {
-  setJson: any;
-  json: JSONContent | null;
+  setJson?: any;
+  json: any | null; //setting this to any since JsonValue and JSONContent are the same thing but typescript doesn't realize it
+  editable?: boolean;
 }) {
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -132,13 +134,16 @@ export function TipTap({
     onUpdate: (props) => {
       setJson(props.editor.getJSON());
     },
+    editable,
   });
   return (
-    <div>
-      <Menubar editor={editor} />
+    <div className="min-h-32">
+      {editable && <Menubar editor={editor} />}
       <EditorContent
         editor={editor}
-        className="rounded-lg border p-2 min-h-[150px] mt-2"
+        className={`${
+          editable ? "rounded-lg border" : ""
+        } p-2 min-h-[150px] mt-2`}
       />
     </div>
   );

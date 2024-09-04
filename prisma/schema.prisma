@@ -17,8 +17,9 @@ model Post {
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
 
-  Subreddit Subreddit @relation(fields: [subName], references: [name])
+  subreddit Subreddit  @relation(fields: [subName], references: [name])
   subName   String
+  votes     PostVote[]
 }
 
 model User {
@@ -32,6 +33,7 @@ model User {
 
   createdSubreddits Subreddit[]
   subscripton       Subscription[]
+  postVotes         PostVote[]
 }
 
 model Subreddit {
@@ -52,4 +54,19 @@ model Subscription {
   subredditId String
 
   @@id([userId, subredditId])
+}
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
+
+model PostVote {
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
+  postId Int
+  Post   Post     @relation(fields: [postId], references: [id])
+  vote   VoteType
+
+  @@id([userId, postId])
 }

@@ -2,8 +2,15 @@
 
 import { getPosts } from "@/lib/data";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import PostPreview from "./PostPreview";
 
-export default function PostFeed({ subName }: { subName: string }) {
+export default function PostFeed({
+  subName,
+  userId,
+}: {
+  subName: string;
+  userId?: string;
+}) {
   const {
     data,
     error,
@@ -36,11 +43,34 @@ export default function PostFeed({ subName }: { subName: string }) {
     <p>Error: {error.message}</p>
   ) : (
     <>
-      {data.pages.map((page, pageIndex) => {
-        return page.map((post, postIndex) => {
-          return <div key={pageIndex + postIndex}>{post.id}</div>;
-        });
-      })}
+      <div className="flex flex-col gap-4">
+        {data.pages.map((page, pageIndex) => {
+          return page.map((post, postIndex) => {
+            let userVoteType = "NONE";
+            const voteRating = post.votes.reduce((acc, curr) => {
+              if (curr.userId === userId) {
+                userVoteType = curr.vote;
+              }
+
+              if (curr.vote === "UPVOTE") {
+                return acc + 1;
+              } else {
+                return acc - 1;
+              }
+            }, 0);
+
+            return (
+              <PostPreview
+                key={pageIndex + postIndex}
+                post={post}
+                voteRating={voteRating}
+                userVoteType={userVoteType}
+              />
+            );
+          });
+        })}
+      </div>
+
       <div>
         <button
           onClick={() => fetchNextPage()}
