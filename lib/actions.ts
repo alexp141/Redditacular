@@ -71,3 +71,46 @@ export async function deleteUTFiles(files: string[]) {
     console.error("UTAPI: Error deleting files", error);
   }
 }
+
+export async function voteOnPost(postId: number, voteType: string) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  console.log("user id", user.id);
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  const userVote = await prisma.postVote.findUnique({
+    where: {
+      userId_postId: {
+        userId: user.id,
+        postId: postId,
+      },
+    },
+    select: { vote: true },
+  });
+
+  if (userVote) {
+    if (userVote.vote === voteType) {
+      // delete the vote
+      const result = await prisma.postVote.delete({
+        where: { userId_postId: { postId: postId, userId: user.id } },
+      });
+    } else {
+      // update the vote
+      const result = await prisma.postVote.update({
+        where: { userId_postId: { postId: postId, userId: user.id } },
+        data: { vote: { set: voteType === "UPVOTE" ? "DOWNVOTE" : "UPVOTE" } },
+      });
+    }
+  } else {
+    const result = await prisma.postVote.create({
+      data: {
+        userId: user.id,
+        postId,
+        vote: voteType as "UPVOTE" | "DOWNVOTE",
+      },
+    });
+  }
+}

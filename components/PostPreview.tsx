@@ -21,7 +21,11 @@ export default function PostPreview({
   return (
     <div className="bg-muted rounded-md overflow-hidden">
       <div className="flex">
-        <PostVoter initialRating={voteRating} userVoteType={userVoteType} />
+        <PostVoter
+          initialRating={voteRating}
+          userVoteType={userVoteType}
+          postId={post.id}
+        />
         <div className="bg-slate-300 w-full p-2">
           <div className="text-xs text-gray-500">
             <Link className="text-sm underline underline-offset-2" href={"/"}>
