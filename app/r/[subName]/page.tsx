@@ -1,5 +1,6 @@
 import Avatar from "@/components/Avatar";
 import PostFeed from "@/components/PostFeed";
+import SubredditSidebar from "@/components/SubredditSidebar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -39,36 +40,7 @@ export default async function page({
           <PostFeed subName={params.subName} userId={user.id} />
         </section>
         <section className="w-[35%]">
-          <Card className="rounded-md overflow-hidden">
-            <CardHeader className="bg-muted">
-              <CardTitle>About r/{`${params.subName}`}</CardTitle>
-              <CardDescription className="text-zinc-500">
-                Deploy your new project in one-click.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between mt-4">
-                <p>Created by</p>
-                <p>Owner</p>
-              </div>
-              <Separator />
-              <div className="flex justify-between">
-                <p>Created on</p>
-                <p>Date</p>
-              </div>
-              <Separator />
-              <div className="flex justify-between">
-                <p>Members</p>
-                <p>4</p>
-              </div>
-              <Separator />
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button asChild className="w-full">
-                <Link href={`/r/${params.subName}/create`}>Create Post</Link>
-              </Button>
-            </CardFooter>
-          </Card>
+          <SubredditSidebar subName={params.subName} />
         </section>
       </div>
     </div>

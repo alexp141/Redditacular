@@ -8,11 +8,11 @@ import usePostVoter from "@/hooks/usePostVoter";
 
 export default function PostVoter({
   initialRating = 0,
-  userVoteType,
+  userVoteType = "NONE",
   postId,
 }: {
   initialRating?: number;
-  userVoteType: string;
+  userVoteType?: string;
   postId: number;
 }) {
   const [voteCount, setVoteCount] = useState(initialRating);

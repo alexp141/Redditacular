@@ -18,6 +18,9 @@ export async function GET(req: Request) {
             vote: true,
           },
         },
+        _count: {
+          select: { comments: true },
+        },
       },
       take: Number(process.env.MAXIMUM_POSTS_PER_FEED),
       orderBy: {
@@ -34,6 +37,9 @@ export async function GET(req: Request) {
             vote: true,
           },
         },
+        _count: {
+          select: { comments: true },
+        },
       },
       skip: 1,
       take: Number(process.env.MAXIMUM_POSTS_PER_FEED),
@@ -46,7 +52,5 @@ export async function GET(req: Request) {
     });
   }
 
-
-  
   return NextResponse.json(queryData);
 }

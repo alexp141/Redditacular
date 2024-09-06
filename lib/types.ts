@@ -9,6 +9,9 @@ export type PostInfo = {
     vote: $Enums.VoteType;
     userId: string;
   }[];
+  _count: {
+    comments: number;
+  };
 } & {
   id: number;
   title: string;

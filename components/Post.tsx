@@ -1,27 +1,34 @@
-import { PostInfo } from "@/lib/types";
-import { MessageSquareIcon } from "lucide-react";
 import Link from "next/link";
 import { TipTap } from "./TipTap";
 import PostVoter from "./PostVoter";
+import { Prisma } from "@prisma/client";
 
-export default function PostPreview({
+type PostProps = Prisma.PostGetPayload<{
+  include: {
+    comments: true;
+    votes: true;
+    author: { select: { username: true } };
+  };
+}>;
+
+export default function Post({
   post,
-  voteRating = 0,
+  initialRating = 0,
   userVoteType = "NONE",
 }: {
-  post: PostInfo;
-  voteRating?: number;
+  post: PostProps;
+  initialRating?: number;
   userVoteType?: string;
 }) {
   return (
     <div className="bg-muted rounded-md overflow-hidden">
       <div className="flex">
         <PostVoter
-          initialRating={voteRating}
+          initialRating={initialRating}
           userVoteType={userVoteType}
           postId={post.id}
         />
-        <div className="bg-slate-300 w-full p-2">
+        <div className=" w-full p-2">
           <div className="text-xs text-gray-500">
             <Link className="text-sm underline underline-offset-2" href={"/"}>
               {`r/${post.subName}`}
@@ -45,15 +52,6 @@ export default function PostPreview({
 
           <TipTap json={post.content} editable={false} />
         </div>
-      </div>
-      <div className="bg-zinc-500 p-2">
-        <Link
-          href={`/r/${post.subName}/post/${post.id}`}
-          className="flex gap-2 items-center w-fit"
-        >
-          <MessageSquareIcon />
-          <p>{post._count.comments} comments</p>
-        </Link>
       </div>
     </div>
   );

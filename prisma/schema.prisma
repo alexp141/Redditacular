@@ -20,10 +20,11 @@ model Post {
   subreddit Subreddit  @relation(fields: [subName], references: [name])
   subName   String
   votes     PostVote[]
+  comments  Comment[]
 }
 
 model User {
-  id        String   @id
+  id        String   @id @unique
   username  String   @unique
   email     String?  @unique
   firstName String?
@@ -34,6 +35,8 @@ model User {
   createdSubreddits Subreddit[]
   subscripton       Subscription[]
   postVotes         PostVote[]
+  comments          Comment[]
+  commentVotes      CommentVote[]
 }
 
 model Subreddit {
@@ -65,8 +68,32 @@ model PostVote {
   userId String
   user   User     @relation(fields: [userId], references: [id])
   postId Int
-  Post   Post     @relation(fields: [postId], references: [id])
+  post   Post     @relation(fields: [postId], references: [id])
   vote   VoteType
 
   @@id([userId, postId])
+}
+
+model Comment {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  author       User          @relation(fields: [userId], references: [id])
+  userId       String
+  post         Post          @relation(fields: [postId], references: [id])
+  postId       Int
+  text         String
+  replyTo      Comment?      @relation("replyTo", fields: [replyToId], references: [id])
+  comments     Comment[]     @relation("replyTo")
+  replyToId    String?
+  commentVotes CommentVote[]
+}
+
+model CommentVote {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  commentId String
+  vote      VoteType
+
+  @@id([userId, commentId])
 }
