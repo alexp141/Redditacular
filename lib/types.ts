@@ -1,5 +1,14 @@
 import { $Enums } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
+import { z } from "zod";
+
+export const CommentSchema = z.object({
+  postId: z.string(),
+  comment: z.string(),
+  replyToId: z.string().optional().nullable(),
+});
+
+// export type CommentSchema = z.infer<typeof CommentSchema>;
 
 export type PostInfo = {
   author: {

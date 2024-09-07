@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import prisma from "./db";
 import { JSONContent } from "@tiptap/react";
 import { UTApi } from "uploadthing/server";
+import { z } from "zod";
+import { CommentSchema } from "./types";
 
 export async function createSubreddit(formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -113,4 +115,36 @@ export async function voteOnPost(postId: number, voteType: string) {
       },
     });
   }
+}
+
+export async function createComment(formData: FormData) {
+  const res = CommentSchema.safeParse({
+    postId: formData.get("postId"),
+    comment: formData.get("comment"),
+    replyToId: formData.get("replyToId"),
+  });
+
+  if (!res.success) {
+    return {
+      status: "zodError",
+      message: res.error.issues
+        .map((issue) => {
+          return `${issue.code} - ${issue.path}: ${issue.message}`;
+        })
+        .join("\n"),
+    };
+  }
+  const { comment, postId, replyToId } = res.data;
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  await prisma.comment.create({
+    data: { postId: Number(postId), text: comment, replyToId, userId: user.id },
+  });
+
+  return { status: "success" };
 }
