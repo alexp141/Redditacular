@@ -35,3 +35,13 @@ export async function getPosts({
   console.log("returned data", data);
   return data;
 }
+
+export async function getComments(postId: number) {
+  const result = await prisma.comment.findMany({
+    include: {
+      author: { select: { username: true } },
+      commentVotes: true,
+      comments: true,
+    },
+  });
+}

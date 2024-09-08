@@ -20,7 +20,7 @@ export default function PostFeed({
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["posts"],
+    queryKey: ["posts", subName],
     queryFn: ({ pageParam }) => getPosts({ pageParam, subName }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
@@ -43,7 +43,7 @@ export default function PostFeed({
     <p>Error: {error.message}</p>
   ) : (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full">
         {data.pages.map((page, pageIndex) => {
           return page.map((post, postIndex) => {
             let userVoteType = "NONE";
@@ -69,19 +69,18 @@ export default function PostFeed({
             );
           });
         })}
-      </div>
-
-      <div>
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? "Loading more..."
-            : hasNextPage
-            ? "Load More"
-            : "Nothing more to load"}
-        </button>
+        <div>
+          <button
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage
+              ? "Loading more..."
+              : hasNextPage
+              ? "Load More"
+              : "Nothing more to load"}
+          </button>
+        </div>
       </div>
     </>
   );

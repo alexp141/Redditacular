@@ -4,12 +4,13 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   const searchParams = new URL(req.url).searchParams;
   const cursor = Number(searchParams.get("cursor"));
-  const subName = searchParams.get("subName");
+  const subName = searchParams.get("subName") ?? undefined;
   console.log("REQUEST URL", req.url);
   let queryData;
 
   if (cursor === 1) {
     queryData = await prisma.post.findMany({
+      where: { subName: { equals: subName === "main" ? undefined : subName } },
       include: {
         author: { select: { username: true } },
         votes: {
@@ -29,6 +30,7 @@ export async function GET(req: Request) {
     });
   } else {
     queryData = await prisma.post.findMany({
+      where: { subName: { equals: subName === "main" ? undefined : subName } },
       include: {
         author: { select: { username: true } },
         votes: {

@@ -2,6 +2,7 @@ import Feed from "@/components/Feed";
 import { LucideHouse } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import PostFeed from "./PostFeed";
 
 export default function Home() {
   return (
@@ -9,9 +10,11 @@ export default function Home() {
       <h1 className="text-3xl font-semibold">Your Feed</h1>
       <div className="grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
-        <Feed />
+        <section className="col-span-2">
+          <PostFeed subName="main" />
+        </section>
         {/*  subreddit info panel */}
-        <div className="col-span-1">
+        <section className="col-span-1">
           <div className="rounded-md overflow-hidden">
             <div className="bg-emerald-500 flex gap-2 p-6 text-lg font-semibold items-center">
               <LucideHouse />
@@ -29,7 +32,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );
