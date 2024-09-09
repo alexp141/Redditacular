@@ -2,16 +2,6 @@ import { JsonValue } from "@prisma/client/runtime/library";
 import prisma from "./db";
 import { PostInfo } from "./types";
 
-type Post = {
-  id: number;
-  title: string;
-  content: JsonValue;
-  image: string | null;
-  createdAt: Date;
-  authorId: string;
-  subName: string;
-};
-
 export async function checkIfSubredditExists(subName: string) {
   const subreddit = await prisma.subreddit.findFirst({
     where: { name: subName },

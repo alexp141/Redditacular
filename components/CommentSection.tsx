@@ -1,9 +1,5 @@
 import { getTopLevelComments } from "@/lib/data";
-import Avatar from "./Avatar";
-import Link from "next/link";
-import { Textarea } from "./ui/textarea";
-import { Separator } from "./ui/separator";
-import CommentVoter from "./CommentVoter";
+import Comment from "./Comment";
 
 export default async function CommentSection({
   postId,
@@ -33,25 +29,13 @@ export default async function CommentSection({
           }, 0);
 
           return (
-            <div className="flex flex-col gap-4" key={comment.id}>
-              <div className="flex gap-2">
-                <Avatar profilePic={comment.author.avatar} />
-                <Link href={`/`}>{`u/${comment.author.username}`}</Link>
-                <p>{`${comment.createdAt.toDateString()}`}</p>
-              </div>
-              <div className="ml-2">
-                <p>{`${comment.text}`}</p>
-              </div>
-              {/* comment voter */}
-              <div className="flex">
-                <CommentVoter
-                  commentId={comment.id}
-                  initialRating={initialRating}
-                  userVoteType={userVoteType}
-                />
-              </div>
-              <Separator />
-            </div>
+            <Comment
+              comment={comment}
+              postId={postId}
+              initialRating={initialRating}
+              userVoteType={userVoteType}
+              key={comment.id}
+            />
           );
         })}
       </div>
