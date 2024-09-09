@@ -57,7 +57,7 @@ export default async function Page({
           userVoteType={userVoteType}
         />
         <CommentCreator postId={post.id} />
-        <CommentSection postId={post.id} />
+        <CommentSection postId={post.id} userId={user.id} />
       </section>
       <section className="w-[35%]">
         <SubredditSidebar subName={params.subName} />

@@ -7,7 +7,7 @@ export const CommentSchema = z.object({
   comment: z.string(),
   replyToId: z.string().optional().nullable(),
 });
-
+export type VoteType = "UPVOTE" | "DOWNVOTE" | "NONE";
 // export type CommentSchema = z.infer<typeof CommentSchema>;
 
 export type PostInfo = {

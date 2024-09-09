@@ -36,12 +36,35 @@ export async function getPosts({
   return data;
 }
 
-export async function getComments(postId: number) {
-  const result = await prisma.comment.findMany({
+export async function getTopLevelComments(postId: number) {
+  const comments = await prisma.comment.findMany({
+    where: {
+      postId,
+      replyToId: null,
+    },
     include: {
-      author: { select: { username: true } },
+      author: { select: { username: true, avatar: true } },
       commentVotes: true,
-      comments: true,
+      _count: { select: { comments: true } },
     },
   });
+
+  console.log(comments);
+  return comments;
+}
+
+export async function getCommentReplies(postId: number, commentId: string) {
+  const comments = await prisma.comment.findMany({
+    where: {
+      postId,
+      replyToId: commentId,
+    },
+    include: {
+      author: { select: { username: true, avatar: true } },
+      commentVotes: true,
+    },
+  });
+
+  console.log(comments);
+  return comments;
 }

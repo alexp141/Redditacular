@@ -21,7 +21,7 @@ export default function usePostVoter(
       voteType,
     }: {
       postId: number;
-      voteType: string;
+      voteType: "UPVOTE" | "DOWNVOTE";
     }) => voteOnPost(postId, voteType),
     onMutate: ({ voteType }) => {
       setCurrentVoteType((curr) => {

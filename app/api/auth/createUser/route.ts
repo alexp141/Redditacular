@@ -23,6 +23,7 @@ export async function GET(req: Request) {
       email: user.email ?? "",
       firstName: user.given_name ?? "",
       lastName: user.family_name ?? "",
+      avatar: user.picture ?? undefined,
     },
   });
 

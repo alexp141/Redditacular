@@ -6,7 +6,7 @@ import prisma from "./db";
 import { JSONContent } from "@tiptap/react";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
-import { CommentSchema } from "./types";
+import { CommentSchema, VoteType } from "./types";
 
 export async function createSubreddit(formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -32,7 +32,6 @@ export async function createPost(
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  console.log("user id", user.id);
   if (!user) {
     redirect("/api/auth/login");
   }
@@ -41,8 +40,6 @@ export async function createPost(
   const imageString = formData.get("image") as string;
   const subName = formData.get("subName") as string;
 
-  console.log("JSON CONTENT", content);
-  console.log("sub name", subName);
   if (!content) {
     throw new Error("The content of the post is empty");
   }
@@ -74,11 +71,13 @@ export async function deleteUTFiles(files: string[]) {
   }
 }
 
-export async function voteOnPost(postId: number, voteType: string) {
+export async function voteOnPost(
+  postId: number,
+  voteType: "UPVOTE" | "DOWNVOTE"
+) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  console.log("user id", user.id);
   if (!user) {
     redirect("/api/auth/login");
   }
@@ -103,7 +102,7 @@ export async function voteOnPost(postId: number, voteType: string) {
       // update the vote
       const result = await prisma.postVote.update({
         where: { userId_postId: { postId: postId, userId: user.id } },
-        data: { vote: { set: voteType === "UPVOTE" ? "DOWNVOTE" : "UPVOTE" } },
+        data: { vote: { set: voteType } },
       });
     }
   } else {
@@ -111,6 +110,53 @@ export async function voteOnPost(postId: number, voteType: string) {
       data: {
         userId: user.id,
         postId,
+        vote: voteType as "UPVOTE" | "DOWNVOTE",
+      },
+    });
+  }
+}
+
+export async function voteOnComment(
+  commentId: string,
+  voteType: "UPVOTE" | "DOWNVOTE"
+) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+  console.log(commentId, voteType);
+  const userVote = await prisma.commentVote.findUnique({
+    where: {
+      userId_commentId: {
+        userId: user.id,
+        commentId: commentId,
+      },
+    },
+    select: { vote: true },
+  });
+  console.log(userVote);
+  if (userVote) {
+    if (userVote.vote === voteType) {
+      // delete the vote
+      await prisma.commentVote.delete({
+        where: { userId_commentId: { commentId, userId: user.id } },
+      });
+    } else {
+      // update the vote
+      console.log("not equal");
+      const res = await prisma.commentVote.update({
+        where: { userId_commentId: { commentId, userId: user.id } },
+        data: { vote: { set: voteType } },
+      });
+      console.log(res);
+    }
+  } else {
+    await prisma.commentVote.create({
+      data: {
+        userId: user.id,
+        commentId,
         vote: voteType as "UPVOTE" | "DOWNVOTE",
       },
     });
