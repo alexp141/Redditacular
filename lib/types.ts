@@ -8,6 +8,12 @@ export const CommentSchema = z.object({
   replyToId: z.string().optional().nullable(),
   pathname: z.string(),
 });
+
+export const CreateSubredditSchema = z.object({
+  description: z.string().min(1),
+  subName: z.string().min(2).max(24),
+});
+
 export type CommentProps = Comment & {
   _count: {
     comments: number;

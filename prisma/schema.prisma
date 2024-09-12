@@ -41,11 +41,12 @@ model User {
 }
 
 model Subreddit {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     String
 
   posts       Post[]
   subscribers Subscription[]

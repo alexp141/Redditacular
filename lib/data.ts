@@ -54,3 +54,15 @@ export async function getCommentReplies(
 
   return data;
 }
+
+export async function getSubredditInfo(subName: string) {
+  const info = await prisma.subreddit.findUnique({
+    where: { name: subName },
+    include: {
+      _count: { select: { subscribers: true, posts: true } },
+      owner: { select: { username: true } },
+    },
+  });
+
+  return info;
+}

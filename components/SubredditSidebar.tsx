@@ -9,30 +9,44 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { getSubredditInfo } from "@/lib/data";
 
-export default function SubredditSidebar({ subName }: { subName: string }) {
+export default async function SubredditSidebar({
+  subName,
+}: {
+  subName: string;
+}) {
+  const subredditInfo = await getSubredditInfo(subName);
+
+  if (!subredditInfo) {
+    return <p className="text-red-500">error loading Subreddit info...</p>;
+  }
+
   return (
     <Card className="rounded-md overflow-hidden">
       <CardHeader className="bg-muted">
         <CardTitle>About r/{`${subName}`}</CardTitle>
-        <CardDescription className="text-zinc-500">
-          Deploy your new project in one-click.
-        </CardDescription>
+        <CardDescription className="text-zinc-500">Description</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex justify-between mt-4">
           <p>Created by</p>
-          <p>Owner</p>
+          <p>{`${subredditInfo.owner.username}`}</p>
         </div>
         <Separator />
         <div className="flex justify-between">
           <p>Created on</p>
-          <p>Date</p>
+          <p>{new Date(subredditInfo.createdAt).toDateString()}</p>
         </div>
         <Separator />
         <div className="flex justify-between">
           <p>Members</p>
-          <p>4</p>
+          <p>{subredditInfo._count.subscribers + 1}</p>
+        </div>
+        <Separator />
+        <div className="flex justify-between">
+          <p>Post Count</p>
+          <p>{subredditInfo._count.posts}</p>
         </div>
         <Separator />
       </CardContent>

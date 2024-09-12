@@ -6,10 +6,21 @@ import prisma from "./db";
 import { JSONContent } from "@tiptap/react";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
-import { CommentSchema, VoteType } from "./types";
+import { CommentSchema, CreateSubredditSchema, VoteType } from "./types";
 import { revalidatePath } from "next/cache";
 
 export async function createSubreddit(formData: FormData) {
+  const res = CreateSubredditSchema.safeParse({
+    subName: formData.get("subName"),
+    description: formData.get("description"),
+  });
+
+  if (!res.success) {
+    throw new Error(res.error.message);
+  }
+
+  const { subName, description } = res.data;
+
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -17,10 +28,8 @@ export async function createSubreddit(formData: FormData) {
     redirect("/api/auth/login");
   }
 
-  const subName = formData.get("subName") as string;
-
   const data = await prisma.subreddit.create({
-    data: { name: subName, ownerId: user.id },
+    data: { name: subName, ownerId: user.id, description },
   });
 
   return redirect(`/r/${subName}`);
