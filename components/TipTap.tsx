@@ -75,6 +75,24 @@ export const Menubar = ({ editor }: { editor: Editor | null }) => {
         Strike
       </Button>
       <Button
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        variant={editor.isActive("codeBlock") ? "default" : "outline"}
+      >
+        Code Block
+      </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        variant={editor.isActive("bulletList") ? "default" : "outline"}
+      >
+        Bullet list
+      </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        variant={editor.isActive("orderedList") ? "default" : "outline"}
+      >
+        Ordered list
+      </Button>
+      <Button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
         variant={
