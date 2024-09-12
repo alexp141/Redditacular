@@ -5,7 +5,6 @@ export async function GET(req: Request) {
   const searchParams = new URL(req.url).searchParams;
   const cursor = Number(searchParams.get("cursor"));
   const subName = searchParams.get("subName") ?? undefined;
-  console.log("REQUEST URL", req.url);
   let queryData;
 
   if (cursor === 1) {

@@ -24,8 +24,6 @@ export default function PostFeed({
     queryFn: ({ pageParam }) => getPosts({ pageParam, subName }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
-      console.log("last page", lastPage);
-      console.log("pages", pages);
       if (
         lastPage.length < Number(process.env.MAXIMUM_POSTS_PER_FEED) ||
         lastPage.at(-1)?.id === lastPageParam

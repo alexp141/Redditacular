@@ -1,6 +1,7 @@
 import { JsonValue } from "@prisma/client/runtime/library";
 import prisma from "./db";
-import { PostInfo } from "./types";
+import { CommentProps, PostInfo } from "./types";
+import { Comment } from "@prisma/client";
 
 export async function checkIfSubredditExists(subName: string) {
   const subreddit = await prisma.subreddit.findFirst({
@@ -22,7 +23,6 @@ export async function getPosts({
 }) {
   const res = await fetch(`/api/test?subName=${subName}&cursor=${pageParam}`);
   const data: PostInfo[] = await res.json();
-  console.log("returned data", data);
   return data;
 }
 
@@ -39,22 +39,18 @@ export async function getTopLevelComments(postId: number) {
     },
   });
 
-  console.log(comments);
   return comments;
 }
 
-export async function getCommentReplies(postId: number, commentId: string) {
-  const comments = await prisma.comment.findMany({
-    where: {
-      postId,
-      replyToId: commentId,
-    },
-    include: {
-      author: { select: { username: true, avatar: true } },
-      commentVotes: true,
-    },
-  });
+export async function getCommentReplies(
+  postId: number,
+  commentId: string,
+  page: number
+) {
+  const res = await fetch(
+    `/api/comments/replies/${postId}/${commentId}?pageNumber=${page}`
+  );
+  const data: Omit<CommentProps, "_count">[] = await res.json();
 
-  console.log(comments);
-  return comments;
+  return data;
 }

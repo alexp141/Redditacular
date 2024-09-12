@@ -98,9 +98,7 @@ export const Menubar = ({ editor }: { editor: Editor | null }) => {
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               // Do something with the response
-              console.log("Files: ", res);
               editor.chain().focus().setImage({ src: res[0].url }).run();
-              console.log("Upload Completed");
             }}
             onUploadError={(error: Error) => {
               // Do something with the error.

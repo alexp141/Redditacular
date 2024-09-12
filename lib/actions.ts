@@ -7,6 +7,7 @@ import { JSONContent } from "@tiptap/react";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
 import { CommentSchema, VoteType } from "./types";
+import { revalidatePath } from "next/cache";
 
 export async function createSubreddit(formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -126,7 +127,7 @@ export async function voteOnComment(
   if (!user) {
     redirect("/api/auth/login");
   }
-  console.log(commentId, voteType);
+
   const userVote = await prisma.commentVote.findUnique({
     where: {
       userId_commentId: {
@@ -136,7 +137,7 @@ export async function voteOnComment(
     },
     select: { vote: true },
   });
-  console.log(userVote);
+
   if (userVote) {
     if (userVote.vote === voteType) {
       // delete the vote
@@ -145,12 +146,10 @@ export async function voteOnComment(
       });
     } else {
       // update the vote
-      console.log("not equal");
       const res = await prisma.commentVote.update({
         where: { userId_commentId: { commentId, userId: user.id } },
         data: { vote: { set: voteType } },
       });
-      console.log(res);
     }
   } else {
     await prisma.commentVote.create({
@@ -168,6 +167,7 @@ export async function createComment(formData: FormData) {
     postId: formData.get("postId"),
     comment: formData.get("comment"),
     replyToId: formData.get("replyToId"),
+    pathname: formData.get("pathname"),
   });
 
   if (!res.success) {
@@ -180,7 +180,7 @@ export async function createComment(formData: FormData) {
         .join("\n"),
     };
   }
-  const { comment, postId, replyToId } = res.data;
+  const { comment, postId, replyToId, pathname } = res.data;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -188,9 +188,18 @@ export async function createComment(formData: FormData) {
     redirect("/api/auth/login");
   }
 
+  console.log("replyToId", typeof replyToId);
   await prisma.comment.create({
-    data: { postId: Number(postId), text: comment, replyToId, userId: user.id },
+    data: {
+      postId: Number(postId),
+      text: comment,
+      replyToId: replyToId ? replyToId : null,
+      userId: user.id,
+    },
   });
+
+  //is a top-level comment
+  revalidatePath(pathname);
 
   return { status: "success" };
 }

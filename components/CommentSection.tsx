@@ -15,6 +15,7 @@ export default async function CommentSection({
       <h1 className="text-2xl font-semibold tracking-tight my-4">Comments</h1>
       <div className="flex flex-col gap-8">
         {topLevelComments.map((comment) => {
+          console.log("top level comment", typeof comment.createdAt);
           let userVoteType;
           const initialRating = comment.commentVotes.reduce((acc, curr) => {
             if (curr.userId === userId) {

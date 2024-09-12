@@ -1,4 +1,4 @@
-import { $Enums } from "@prisma/client";
+import { $Enums, Comment } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 import { z } from "zod";
 
@@ -6,7 +6,23 @@ export const CommentSchema = z.object({
   postId: z.string(),
   comment: z.string(),
   replyToId: z.string().optional().nullable(),
+  pathname: z.string(),
 });
+export type CommentProps = Comment & {
+  _count: {
+    comments: number;
+  };
+  author: {
+    username: string;
+    avatar: string | null;
+  };
+  commentVotes: {
+    userId: string;
+    commentId: string;
+    vote: $Enums.VoteType;
+  }[];
+};
+
 export type VoteType = "UPVOTE" | "DOWNVOTE" | "NONE";
 // export type CommentSchema = z.infer<typeof CommentSchema>;
 

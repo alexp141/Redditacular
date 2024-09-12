@@ -7,17 +7,23 @@ import { z } from "zod";
 import FormSubmitButton from "./FormSubmitButton";
 import { useToast } from "@/hooks/use-toast";
 import { Dispatch, SetStateAction } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 
 export default function CommentCreator({
   postId,
   replyToId,
   setIsReplying,
+  commentId,
 }: {
   postId: number;
   replyToId?: string;
-  setIsReplying: Dispatch<SetStateAction<boolean>>;
+  setIsReplying?: Dispatch<SetStateAction<boolean>>;
+  commentId?: string;
 }) {
   const { toast } = useToast();
+  const pathname = usePathname();
+  const queryClient = useQueryClient();
   async function handleSubmit(formData: FormData) {
     const res = await createComment(formData);
     if (res.status === "zodError") {
@@ -25,8 +31,10 @@ export default function CommentCreator({
 
       return;
     }
+    console.log("invalidate", commentId);
+    queryClient.invalidateQueries({ queryKey: ["comment-replies", replyToId] });
     toast({ title: "success", description: "Comment Posted" });
-    setIsReplying(false);
+    if (setIsReplying) setIsReplying(false);
   }
 
   return (
@@ -34,6 +42,7 @@ export default function CommentCreator({
       <form action={handleSubmit} className="space-y-2">
         <input type="hidden" name="postId" value={postId} />
         <input type="hidden" name="replyToId" value={replyToId} />
+        <input type="hidden" name="pathname" value={pathname} />
         <Label>Your comment</Label>
         <Textarea
           placeholder="Type your message here"
