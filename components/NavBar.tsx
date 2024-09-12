@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Command, CommandInput } from "./ui/command";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import ProfileDropdown from "./ProfileDropdown";
+import Link from "next/link";
 
 export default async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -15,7 +16,7 @@ export default async function Navbar() {
   return (
     <div className="bg-muted py-4">
       <div className="container flex items-center justify-between">
-        <p>logo</p>
+        <Link href={`/`}>logo</Link>
         <div className=" gap-2 flex w-full max-w-sm items-center">
           <div className="w-full">
             <Command>

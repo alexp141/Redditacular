@@ -28,13 +28,15 @@ export default function Comment({
   //   console.log(comment.createdAt);
   return (
     <div className="flex flex-col gap-4" key={comment.id}>
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         <Avatar profilePic={comment.author.avatar} />
         <Link
           href={`/`}
           className="hover:underline underline-offset-4"
         >{`u/${comment.author.username}`}</Link>
-        <p>{`${new Date(comment.createdAt)}`}</p>
+        <p className="ml-auto">{`${new Date(
+          comment.createdAt
+        ).toDateString()}`}</p>
       </div>
       <div className="ml-2">
         <p>{`${comment.text}`}</p>

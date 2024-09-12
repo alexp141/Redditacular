@@ -1,3 +1,4 @@
+import FormSubmitButton from "@/components/FormSubmitButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,7 +49,7 @@ export default function Page() {
           <Button type="button" variant={"secondary"}>
             Cancel
           </Button>
-          <Button type="submit">Create Community</Button>
+          <FormSubmitButton>Create Community</FormSubmitButton>
         </div>
       </form>
     </main>
