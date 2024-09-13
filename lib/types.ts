@@ -52,3 +52,27 @@ export type PostInfo = {
   authorId: string;
   subName: string;
 };
+
+export const profileFormSchema = z.object({
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  username: z
+    .string()
+    .min(2, {
+      message: "Username must be at least 2 characters.",
+    })
+    .max(24, {
+      message: "Username must not be longer than 24 characters.",
+    }),
+  bio: z.string().optional(),
+  urls: z
+    .array(
+      z.object({
+        value: z.string().url({ message: "Please enter a valid URL." }),
+      })
+    )
+    .optional(),
+});
+
+// get types
+export type ProfileFormValues = z.infer<typeof profileFormSchema>;

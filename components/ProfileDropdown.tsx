@@ -24,7 +24,7 @@ export default function ProfileDropdown({
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={`/users/${user.username}`}>Profile</Link>
+          <Link href={`/settings`}>Profile</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

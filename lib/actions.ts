@@ -6,7 +6,13 @@ import prisma from "./db";
 import { JSONContent } from "@tiptap/react";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
-import { CommentSchema, CreateSubredditSchema, VoteType } from "./types";
+import {
+  CommentSchema,
+  CreateSubredditSchema,
+  profileFormSchema,
+  ProfileFormValues,
+  VoteType,
+} from "./types";
 import { revalidatePath } from "next/cache";
 
 export async function createSubreddit(formData: FormData) {
@@ -211,4 +217,32 @@ export async function createComment(formData: FormData) {
   revalidatePath(pathname);
 
   return { status: "success" };
+}
+
+export async function updateProfile(data: ProfileFormValues) {
+  const res = profileFormSchema.safeParse({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    username: data.username,
+  });
+
+  if (!res.success) {
+    throw new Error("invalid inputs when updating profile");
+  }
+
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  const { username, lastName, firstName } = res.data;
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { firstName, lastName, username },
+  });
+
+  revalidatePath(`/settings`);
 }
