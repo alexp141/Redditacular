@@ -8,6 +8,7 @@ import { Command, CommandInput } from "./ui/command";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import ProfileDropdown from "./ProfileDropdown";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
 export default async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -17,19 +18,7 @@ export default async function Navbar() {
     <div className="bg-muted py-4">
       <div className="container flex items-center justify-between">
         <Link href={`/`}>logo</Link>
-        <div className=" gap-2 flex w-full max-w-sm items-center">
-          <div className="w-full">
-            <Command>
-              <CommandInput
-                placeholder="Search Communities..."
-                className="w-full"
-              />
-            </Command>
-          </div>
-          <Button type="button" className="">
-            Search
-          </Button>
-        </div>
+        <SearchBar />
         <div className="flex gap-2">
           {user ? (
             <>
