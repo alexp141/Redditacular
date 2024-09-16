@@ -157,9 +157,7 @@ export function TipTap({
       {editable && <Menubar editor={editor} />}
       <EditorContent
         editor={editor}
-        className={`${
-          editable ? "rounded-lg border" : ""
-        } p-2 min-h-[150px] mt-2`}
+        className={`${editable ? "rounded-lg border" : ""} min-h-[150px] mt-2`}
       />
     </div>
   );
