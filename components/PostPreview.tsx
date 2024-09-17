@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TipTap } from "./TipTap";
 import PostVoter from "./PostVoter";
 import { Separator } from "./ui/separator";
+import TipTapPreview from "./TipTapPreview";
 
 export default function PostPreview({
   post,
@@ -45,8 +46,7 @@ export default function PostPreview({
             </Link>
           </div>
           <Separator />
-          <TipTap json={post.content} editable={false} />
-          <Separator />
+          <TipTapPreview json={post.content} editable={false} />
           <div className="p-4">
             <Link
               href={`/r/${post.subName}/post/${post.id}`}
