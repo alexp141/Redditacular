@@ -45,7 +45,5 @@ export async function GET(
     },
     orderBy: { createdAt: "asc" },
   });
-  console.log("server");
-  replies.map((reply) => console.log("todate", reply.createdAt.toDateString()));
   return Response.json(replies);
 }

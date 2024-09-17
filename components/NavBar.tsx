@@ -23,9 +23,6 @@ export default async function Navbar() {
           {user ? (
             <>
               <ProfileDropdown user={user} />
-              <Button asChild>
-                <LogoutLink>Logout</LogoutLink>
-              </Button>
             </>
           ) : (
             <>

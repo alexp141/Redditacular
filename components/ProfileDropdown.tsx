@@ -9,6 +9,7 @@ import {
 } from "./ui/dropdown-menu";
 import Link from "next/link";
 import Avatar from "./Avatar";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 export default function ProfileDropdown({
   user,
 }: {
@@ -25,6 +26,9 @@ export default function ProfileDropdown({
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link href={`/settings`}>Profile</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <LogoutLink>Logout</LogoutLink>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

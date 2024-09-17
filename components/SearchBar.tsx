@@ -43,7 +43,7 @@ export default function SearchBar() {
       <div className="w-full">
         <Command className="relative overflow-visible">
           <CommandInput
-            placeholder="Search Communities..."
+            placeholder="Search Communities and posts"
             className="w-full "
             onValueChange={(query) => handleSearch(query)}
           />
@@ -59,7 +59,7 @@ export default function SearchBar() {
                 {data[0].map((elem, i) => {
                   return (
                     <Link href={`/r/${elem.name}`} key={i}>
-                      <CommandItem>{elem.name}</CommandItem>
+                      <CommandItem>{`r/${elem.name}`}</CommandItem>
                     </Link>
                   );
                 })}

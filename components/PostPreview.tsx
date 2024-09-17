@@ -26,18 +26,13 @@ export default function PostPreview({
           <div className="text-xs text-gray-500">
             <Link
               className="text-sm hover:underline underline-offset-2"
-              href={"/"}
+              href={`r/${post.subName}`}
             >
               {`r/${post.subName}`}
             </Link>
 
             <span className="px-1">*</span>
-            <span>
-              Posted by{" "}
-              <Link href={"/"} className="hover:underline underline-offset-2">
-                {post.author.username ?? "undefined"}
-              </Link>
-            </span>
+            <span>Posted by {post.author.username ?? "undefined"}</span>
           </div>
           <div className="">
             <Link

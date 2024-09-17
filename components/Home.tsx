@@ -3,15 +3,19 @@ import { LucideHouse } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import PostFeed from "./PostFeed";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-export default function Home() {
+export default async function Home() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   return (
     <main className="container pt-6">
       <h1 className="text-3xl font-semibold">Your Feed</h1>
       <div className="grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
         <section className="col-span-2">
-          <PostFeed subName="main" />
+          <PostFeed subName="main" userId={user?.id} />
         </section>
         {/*  subreddit info panel */}
         <section className="col-span-1">

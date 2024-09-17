@@ -52,6 +52,9 @@ export async function GET(req: Request) {
       },
     });
   }
-
+  console.log(
+    "query data",
+    queryData.map((elem) => elem.votes)
+  );
   return NextResponse.json(queryData);
 }

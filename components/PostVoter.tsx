@@ -23,7 +23,6 @@ export default function PostVoter({
     currentVoteType,
     voteCount
   );
-
   return (
     <div className=" flex flex-col items-center p-2">
       <Button
