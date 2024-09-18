@@ -11,21 +11,36 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TipTap } from "./TipTap";
 import { useState } from "react";
 import { JSONContent } from "@tiptap/react";
-import { UploadDropzone } from "./uploadthing";
+
 import { createPost } from "@/lib/actions";
+import { useToast } from "@/hooks/use-toast";
 
 export default function PostCreator({ subName }: { subName: string }) {
   const [editorJSON, setEditorJSON] = useState<JSONContent | null>(null);
   const [title, setTitle] = useState("");
+  const { toast } = useToast();
 
-  const formAction = createPost.bind(
-    null,
-    JSON.parse(JSON.stringify(editorJSON))
-  );
+  async function handleSubmit(formData: FormData) {
+    try {
+      await createPost(JSON.parse(JSON.stringify(editorJSON)), formData);
+      toast({
+        title: "Success",
+        description: "Post successfully created",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        toast({
+          title: "An error occured!",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+    }
+  }
 
   return (
     <Card className="w-full">
@@ -33,7 +48,7 @@ export default function PostCreator({ subName }: { subName: string }) {
         <CardTitle>New Post</CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        <form action={formAction} className="space-y-1" id="createPostform">
+        <form action={handleSubmit} className="space-y-1" id="createPostform">
           <input type="hidden" name="subName" value={subName} />
           <Label htmlFor="post-title" className="text-lg">
             Title
@@ -52,11 +67,11 @@ export default function PostCreator({ subName }: { subName: string }) {
           />
         </form>
         <TipTap setJson={setEditorJSON} json={editorJSON} editable={true} />
-        <CardFooter className="flex justify-end">
+        <div className="flex justify-end">
           <Button type="submit" form="createPostform">
             Submit Post
           </Button>
-        </CardFooter>
+        </div>
       </CardContent>
     </Card>
   );
