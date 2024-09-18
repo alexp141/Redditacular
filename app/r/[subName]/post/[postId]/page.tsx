@@ -45,7 +45,10 @@ export default async function Page({
   return (
     <div className="flex gap-10 mt-10">
       <section className="w-[65%] flex flex-col gap-4">
-        <Link href={`/r/${params.subName}`} className="space-x-4 flex my-4">
+        <Link
+          href={`/r/${params.subName}`}
+          className="space-x-4 flex my-4 w-fit"
+        >
           <MoveLeftIcon />
           <p className="hover:underline underline-offset-4">
             Back to community
