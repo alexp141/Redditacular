@@ -151,6 +151,7 @@ export function TipTap({
       setJson(props.editor.getJSON());
     },
     editable,
+    immediatelyRender: false,
   });
   return (
     <div className="min-h-32">

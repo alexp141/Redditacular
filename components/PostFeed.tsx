@@ -3,6 +3,8 @@
 import { getPosts } from "@/lib/data";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import PostPreview from "./PostPreview";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 export default function PostFeed({
   subName,
@@ -35,6 +37,17 @@ export default function PostFeed({
     },
   });
 
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
   return status === "pending" ? (
     <p>Loading...</p>
   ) : status === "error" ? (
@@ -42,8 +55,8 @@ export default function PostFeed({
   ) : (
     <>
       <div className="flex flex-col gap-4 w-full">
-        {data.pages.map((page, pageIndex) => {
-          return page.map((post, postIndex) => {
+        {data.pages.flatMap((posts) =>
+          posts.map((post, postIndex) => {
             let userVoteType = "NONE";
             const voteRating = post.votes.reduce((acc, curr) => {
               if (curr.userId === userId) {
@@ -56,28 +69,27 @@ export default function PostFeed({
                 return acc - 1;
               }
             }, 0);
-            console.log("initial but", userVoteType);
-            return (
+            return postIndex === posts.length - 1 ? (
               <PostPreview
-                key={pageIndex + postIndex}
+                innerRef={ref}
+                key={post.id}
+                post={post}
+                voteRating={voteRating}
+                userVoteType={userVoteType}
+              />
+            ) : (
+              <PostPreview
+                key={post.id}
                 post={post}
                 voteRating={voteRating}
                 userVoteType={userVoteType}
               />
             );
-          });
-        })}
-        <div>
-          <button
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            {isFetchingNextPage
-              ? "Loading more..."
-              : hasNextPage
-              ? "Load More"
-              : "Nothing more to load"}
-          </button>
+          })
+        )}
+
+        <div className="flex justify-center items-center">
+          {isFetchingNextPage ? <p>loading...</p> : null}
         </div>
       </div>
     </>

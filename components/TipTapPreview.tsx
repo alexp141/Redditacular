@@ -10,7 +10,6 @@ export default function TipTapPreview({
   editable: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  console.log(ref.current?.clientHeight);
   return (
     <div className="max-h-48 relative overflow-hidden" ref={ref}>
       <TipTap json={json} editable={editable} />

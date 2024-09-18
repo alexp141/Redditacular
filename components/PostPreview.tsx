@@ -10,13 +10,15 @@ export default function PostPreview({
   post,
   voteRating = 0,
   userVoteType = "NONE",
+  innerRef,
 }: {
   post: PostInfo;
   voteRating?: number;
   userVoteType?: string;
+  innerRef?: (node?: Element | null) => void;
 }) {
   return (
-    <div className=" rounded-md overflow-hidden border shadow">
+    <div className=" rounded-md overflow-hidden border shadow" ref={innerRef}>
       <div className="flex">
         <PostVoter
           initialRating={voteRating}
