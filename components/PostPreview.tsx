@@ -1,10 +1,10 @@
 import { PostInfo } from "@/lib/types";
-import { MessageSquareIcon } from "lucide-react";
+import { MessageSquareIcon, Share } from "lucide-react";
 import Link from "next/link";
-import { TipTap } from "./TipTap";
 import PostVoter from "./PostVoter";
 import { Separator } from "./ui/separator";
 import TipTapPreview from "./TipTapPreview";
+import ShareButton from "./ShareButton";
 
 export default function PostPreview({
   post,
@@ -49,7 +49,7 @@ export default function PostPreview({
           </div>
           <Separator />
           <TipTapPreview json={post.content} editable={false} />
-          <div className="p-4">
+          <div className="p-4 flex gap-4">
             <Link
               href={`/r/${post.subName}/post/${post.id}`}
               className="flex gap-2 items-center w-fit"
@@ -57,9 +57,10 @@ export default function PostPreview({
               <MessageSquareIcon />
               <p>
                 {post._count.comments}{" "}
-                {post._count.comments === 1 ? "comment" : "comments"}
+                {post._count.comments === 1 ? "Comment" : "Comments"}
               </p>
             </Link>
+            <ShareButton link={`/r/${post.subName}/post/${post.id}`} />
           </div>
         </div>
       </div>
