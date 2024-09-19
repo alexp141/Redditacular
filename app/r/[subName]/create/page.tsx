@@ -1,16 +1,26 @@
 import PostCreator from "@/components/PostCreator";
 import { checkIfSubredditExists } from "@/lib/data";
-import { notFound } from "next/navigation";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Page({
   params,
 }: {
   params: { subName: string };
 }) {
-  const subredditExists = await checkIfSubredditExists(params.subName);
+  const { getUser } = getKindeServerSession();
+
+  const [subredditExists, user] = await Promise.all([
+    checkIfSubredditExists(params.subName),
+    getUser(),
+  ]);
 
   if (!subredditExists) {
     return notFound();
+  }
+
+  if (!user) {
+    redirect(`/api/auth/login`);
   }
 
   return (
