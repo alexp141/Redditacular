@@ -1,11 +1,7 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import {
-  useEditor,
-  type Editor,
-  EditorContent,
-  JSONContent,
-} from "@tiptap/react";
+import { useEditor, type Editor, EditorContent } from "@tiptap/react";
 import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -17,7 +13,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { UploadDropzone } from "./uploadthing";
-import { JsonValue } from "@prisma/client/runtime/library";
+import { cn } from "@/lib/utils";
 
 export const Menubar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
@@ -25,7 +21,7 @@ export const Menubar = ({ editor }: { editor: Editor | null }) => {
   }
 
   return (
-    <div className="flex flex-wrap gap-5 mt-5">
+    <div className="flex flex-wrap gap-x-2 gap-y-2 mt-6">
       <Button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -151,14 +147,16 @@ export function TipTap({
       setJson(props.editor.getJSON());
     },
     editable,
-    immediatelyRender: false,
+    immediatelyRender: true, //rendered client side
   });
   return (
-    <div className="min-h-32">
+    <div>
       {editable && <Menubar editor={editor} />}
       <EditorContent
         editor={editor}
-        className={`${editable ? "rounded-lg border" : ""} min-h-[150px] mt-2`}
+        className={cn(`p-2 mt-2`, {
+          "rounded-lg border min-h-32": editable,
+        })}
       />
     </div>
   );

@@ -62,7 +62,6 @@ export default function PostFeed({
               if (curr.userId === userId) {
                 userVoteType = curr.vote;
               }
-              console.log("boat", curr);
               if (curr.vote === "UPVOTE") {
                 return acc + 1;
               } else {
