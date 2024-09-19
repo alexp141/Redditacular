@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import CommentReplies from "./CommentReplies";
 import { CommentProps } from "@/lib/types";
+import { calculateDateDistance } from "@/lib/utils";
 
 export default function Comment({
   comment,
@@ -34,9 +35,9 @@ export default function Comment({
           href={`/`}
           className="hover:underline underline-offset-4"
         >{`u/${comment.author.username}`}</Link>
-        <p className="ml-auto">{`${new Date(
-          comment.createdAt
-        ).toDateString()}`}</p>
+        <p className="ml-auto text-muted-foreground">
+          {calculateDateDistance(comment.createdAt, new Date())}
+        </p>
       </div>
       <div className="ml-2">
         <p>{`${comment.text}`}</p>

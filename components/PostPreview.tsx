@@ -5,6 +5,7 @@ import PostVoter from "./PostVoter";
 import { Separator } from "./ui/separator";
 import TipTapPreview from "./TipTapPreview";
 import ShareButton from "./ShareButton";
+import { calculateDateDistance } from "@/lib/utils";
 
 export default function PostPreview({
   post,
@@ -26,7 +27,7 @@ export default function PostPreview({
           postId={post.id}
         />
         <div className=" w-full p-2">
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-500 flex items-center">
             <Link
               className="text-sm hover:underline underline-offset-2"
               href={`r/${post.subName}`}
@@ -36,6 +37,9 @@ export default function PostPreview({
 
             <span className="px-1">*</span>
             <span>Posted by {post.author.username ?? "undefined"}</span>
+            <span className="ml-auto text-muted-foreground">
+              {calculateDateDistance(post.createdAt, new Date())}
+            </span>
           </div>
           <div className="">
             <Link

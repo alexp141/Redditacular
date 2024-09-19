@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { z } from "zod";
 import FormSubmitButton from "./FormSubmitButton";
 import { useToast } from "@/hooks/use-toast";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 
@@ -24,6 +24,8 @@ export default function CommentCreator({
   const { toast } = useToast();
   const pathname = usePathname();
   const queryClient = useQueryClient();
+  const [comment, setComment] = useState("");
+
   async function handleSubmit(formData: FormData) {
     const res = await createComment(formData);
     if (res.status === "zodError") {
@@ -34,6 +36,7 @@ export default function CommentCreator({
     console.log("invalidate", commentId);
     queryClient.invalidateQueries({ queryKey: ["comment-replies", replyToId] });
     toast({ title: "success", description: "Comment Posted" });
+    setComment("");
     if (setIsReplying) setIsReplying(false);
   }
 
@@ -48,6 +51,8 @@ export default function CommentCreator({
           placeholder="Type your message here"
           className=""
           name="comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         />
         <div className="flex justify-end">
           <FormSubmitButton>
