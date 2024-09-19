@@ -4,6 +4,14 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import PostFeed from "./PostFeed";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import SiteWideRules from "./SiteWideRules";
 
 export default async function Home() {
   const { getUser } = getKindeServerSession();
@@ -18,7 +26,7 @@ export default async function Home() {
           <PostFeed subName="main" userId={user?.id} />
         </section>
         {/*  subreddit info panel */}
-        <section className="col-span-1">
+        <section className="col-span-1 space-y-8">
           <div className="rounded-md overflow-hidden">
             <div className="bg-emerald-500 flex gap-2 p-6 text-lg font-semibold items-center">
               <LucideHouse />
@@ -36,6 +44,19 @@ export default async function Home() {
               </Button>
             </div>
           </div>
+          {/* rules */}
+          <Card className="rounded-md overflow-hidden">
+            <CardHeader className="bg-orange-500">
+              <CardTitle>Site-wide Rules</CardTitle>
+              <CardDescription className="text-black">
+                Rules that must be followed when creating a new post or
+                commenting.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SiteWideRules />
+            </CardContent>
+          </Card>
         </section>
       </div>
     </main>
