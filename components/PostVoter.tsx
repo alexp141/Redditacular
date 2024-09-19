@@ -24,7 +24,7 @@ export default function PostVoter({
     voteCount
   );
   return (
-    <div className=" flex flex-col items-center p-2">
+    <div className=" flex items-center p-2">
       <Button
         size={"sm"}
         variant={"ghost"}

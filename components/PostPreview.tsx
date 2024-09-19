@@ -19,14 +19,12 @@ export default function PostPreview({
   innerRef?: (node?: Element | null) => void;
 }) {
   return (
-    <div className=" rounded-md overflow-hidden border shadow" ref={innerRef}>
+    <div
+      className="rounded-md overflow-hidden border shadow p-4"
+      ref={innerRef}
+    >
       <div className="flex">
-        <PostVoter
-          initialRating={voteRating}
-          userVoteType={userVoteType}
-          postId={post.id}
-        />
-        <div className=" w-full p-2">
+        <div className=" w-full">
           <div className="text-xs text-gray-500 flex items-center">
             <Link
               className="text-sm hover:underline underline-offset-2"
@@ -53,10 +51,15 @@ export default function PostPreview({
           </div>
           <Separator />
           <TipTapPreview json={post.content} editable={false} />
-          <div className="p-4 flex gap-4">
+          <div className="flex items-center gap-4 mt-4">
+            <PostVoter
+              initialRating={voteRating}
+              userVoteType={userVoteType}
+              postId={post.id}
+            />
             <Link
               href={`/r/${post.subName}/post/${post.id}`}
-              className="flex gap-2 items-center w-fit"
+              className="flex gap-2 items-center hover:bg-muted p-2 rounded-md"
             >
               <MessageSquareIcon />
               <p>
