@@ -66,7 +66,10 @@ export default function PostCreator({ subName }: { subName: string }) {
             }}
           />
         </form>
-        <TipTap setJson={setEditorJSON} json={editorJSON} editable={true} />
+        <TipTap setJson={setEditorJSON} json={editorJSON} editable={true}>
+          <TipTap.Menubar />
+          <TipTap.Editor />
+        </TipTap>
         <div className="flex justify-end">
           <Button type="submit" form="createPostform">
             Submit Post

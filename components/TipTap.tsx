@@ -1,7 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useEditor, type Editor, EditorContent } from "@tiptap/react";
+import {
+  useEditor,
+  type Editor as EditorType,
+  EditorContent,
+} from "@tiptap/react";
 import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -14,8 +18,12 @@ import {
 } from "./ui/dialog";
 import { UploadDropzone } from "./uploadthing";
 import { cn } from "@/lib/utils";
+import { createContext, ReactNode, useContext } from "react";
+import { EditorContext, useTipTap } from "@/hooks/useTipTap";
 
-export const Menubar = ({ editor }: { editor: Editor | null }) => {
+function Menubar() {
+  const { editor } = useTipTap();
+
   if (!editor) {
     return null;
   }
@@ -124,16 +132,30 @@ export const Menubar = ({ editor }: { editor: Editor | null }) => {
       </Dialog>
     </div>
   );
-};
+}
 
-export function TipTap({
+function Editor() {
+  const { editor, editable } = useTipTap();
+
+  return (
+    <EditorContent
+      editor={editor}
+      className={cn(`p-2 mt-2`, {
+        "rounded-lg border min-h-32": editable,
+      })}
+    />
+  );
+}
+function TipTap({
   setJson,
   json,
   editable = false,
+  children,
 }: {
   setJson?: any;
   json: any | null; //setting this to any since JsonValue and JSONContent are the same thing but typescript doesn't realize it
   editable?: boolean;
+  children: ReactNode;
 }) {
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -149,15 +171,15 @@ export function TipTap({
     editable,
     immediatelyRender: true, //rendered client side
   });
+
   return (
-    <div>
-      {editable && <Menubar editor={editor} />}
-      <EditorContent
-        editor={editor}
-        className={cn(`p-2 mt-2`, {
-          "rounded-lg border min-h-32": editable,
-        })}
-      />
-    </div>
+    <EditorContext.Provider value={{ editor, editable }}>
+      {children}
+    </EditorContext.Provider>
   );
 }
+
+TipTap.Menubar = Menubar;
+TipTap.Editor = Editor;
+
+export { TipTap, useTipTap };

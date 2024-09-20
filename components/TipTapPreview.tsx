@@ -11,7 +11,9 @@ export default function TipTapPreview({
 }) {
   return (
     <div className="h-40 relative overflow-clip">
-      <TipTap json={json} editable={editable} />
+      <TipTap json={json} editable={editable}>
+        <TipTap.Editor />
+      </TipTap>
 
       <div className="absolute bottom-0 inset-x-0 h-24 w-full bg-gradient-to-t from-white to-transparent"></div>
     </div>

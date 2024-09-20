@@ -6,14 +6,18 @@ import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import usePostVoter from "@/hooks/usePostVoter";
 
+type Variant = "horizontal" | "vertical";
+
 export default function PostVoter({
   initialRating = 0,
   userVoteType = "NONE",
   postId,
+  variant = "horizontal",
 }: {
   initialRating?: number;
   userVoteType?: string;
   postId: number;
+  variant?: Variant;
 }) {
   const [voteCount, setVoteCount] = useState(initialRating);
   const [currentVoteType, setCurrentVoteType] = useState(userVoteType);
@@ -24,7 +28,11 @@ export default function PostVoter({
     voteCount
   );
   return (
-    <div className=" flex items-center p-2">
+    <div
+      className={cn("flex items-center p-2", {
+        "flex-col": variant === "vertical",
+      })}
+    >
       <Button
         size={"sm"}
         variant={"ghost"}

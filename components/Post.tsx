@@ -2,6 +2,7 @@ import Link from "next/link";
 import { TipTap } from "./TipTap";
 import PostVoter from "./PostVoter";
 import { Prisma } from "@prisma/client";
+import PostContent from "./PostContent";
 
 type PostProps = Prisma.PostGetPayload<{
   include: {
@@ -27,6 +28,7 @@ export default function Post({
           initialRating={initialRating}
           userVoteType={userVoteType}
           postId={post.id}
+          variant="vertical"
         />
         <div className=" w-full p-2">
           <div className="text-xs text-gray-500">
@@ -50,7 +52,7 @@ export default function Post({
             </Link>
           </div>
 
-          <TipTap json={post.content} editable={false} />
+          <PostContent content={post.content} />
         </div>
       </div>
     </div>
