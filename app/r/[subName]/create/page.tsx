@@ -1,4 +1,5 @@
 import PostCreator from "@/components/PostCreator";
+import SiteWideRules from "@/components/SiteWideRules";
 import { checkIfSubredditExists } from "@/lib/data";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { notFound, redirect } from "next/navigation";
@@ -28,7 +29,9 @@ export default async function Page({
       <div className="w-[65%]">
         <PostCreator subName={params.subName} />
       </div>
-      <div className="w-[35%]">section two</div>
+      <div className="w-[35%]">
+        <SiteWideRules />
+      </div>
     </section>
   );
 }

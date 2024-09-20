@@ -45,18 +45,7 @@ export default async function Home() {
             </div>
           </div>
           {/* rules */}
-          <Card className="rounded-md overflow-hidden">
-            <CardHeader className="bg-orange-500">
-              <CardTitle>Site-wide Rules</CardTitle>
-              <CardDescription className="text-black">
-                Rules that must be followed when creating a new post or
-                commenting.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <SiteWideRules />
-            </CardContent>
-          </Card>
+          <SiteWideRules />
         </section>
       </div>
     </main>
