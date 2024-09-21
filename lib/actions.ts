@@ -14,6 +14,7 @@ import {
   VoteType,
 } from "./types";
 import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
 
 export async function createSubreddit(formData: FormData) {
   const res = CreateSubredditSchema.safeParse({
@@ -34,9 +35,19 @@ export async function createSubreddit(formData: FormData) {
     redirect("/api/auth/login");
   }
 
-  const data = await prisma.subreddit.create({
-    data: { name: subName, ownerId: user.id, description },
-  });
+  try {
+    await prisma.subreddit.create({
+      data: { name: subName, ownerId: user.id, description },
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        throw new Error("There is already a community with this name.");
+      }
+
+      throw new Error("Unable to create community.");
+    }
+  }
 
   return redirect(`/r/${subName}`);
 }
