@@ -43,7 +43,7 @@ export default function Comment({
         <p>{`${comment.text}`}</p>
       </div>
       {/* comment voter */}
-      <div className="flex items-center justify-around">
+      <div className="flex items-center justify-between">
         <CommentVoter
           commentId={comment.id}
           initialRating={initialRating}
@@ -54,7 +54,11 @@ export default function Comment({
             variant={"ghost"}
             className="hover:underline underline-offset-4"
           >
-            View {comment._count.comments} comments
+            {comment._count.comments === 1 ? (
+              <p>{comment._count.comments} Commment</p>
+            ) : (
+              <p>{comment._count.comments} Commments</p>
+            )}
           </Button>
         )}
         <ReplyButton setIsReplying={setIsReplying} />
