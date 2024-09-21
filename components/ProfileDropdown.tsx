@@ -24,12 +24,12 @@ export default function ProfileDropdown({
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href={`/settings`}>Profile</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <LogoutLink>Logout</LogoutLink>
-        </DropdownMenuItem>
+        <Link href={`/settings`}>
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+        </Link>
+        <LogoutLink>
+          <DropdownMenuItem>Logout</DropdownMenuItem>
+        </LogoutLink>
       </DropdownMenuContent>
     </DropdownMenu>
   );
