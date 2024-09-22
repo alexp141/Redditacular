@@ -19,7 +19,14 @@ export default function SiteWideRules() {
   return (
     <Card className="rounded-md overflow-hidden">
       <CardHeader className="bg-orange-500">
-        <CardTitle>Site-wide Rules</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <img
+            src="/reddit-logo-2436.svg"
+            alt="reddit snoo"
+            className="max-h-12"
+          />
+          <p>Site-wide Rules</p>
+        </CardTitle>
         <CardDescription className="text-black">
           Rules that must be followed when creating a new post or commenting.
         </CardDescription>

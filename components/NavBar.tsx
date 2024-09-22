@@ -17,7 +17,13 @@ export default async function Navbar() {
   return (
     <div className="bg-muted py-4">
       <div className="container flex items-center justify-between">
-        <Link href={`/`}>logo</Link>
+        <Link href={`/`} className="">
+          <img
+            src={"/original-logo.png"}
+            alt="reddit logo"
+            className="max-h-12"
+          />
+        </Link>
         <SearchBar />
         <div className="flex gap-2">
           {user ? (

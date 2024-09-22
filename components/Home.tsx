@@ -29,7 +29,7 @@ export default async function Home() {
         <section className="col-span-1 space-y-8">
           <div className="rounded-md overflow-hidden">
             <div className="bg-emerald-500 flex gap-2 p-6 text-lg font-semibold items-center">
-              <LucideHouse />
+              <img src="/reddit-1.svg" alt="reddit icon" className="max-h-12" />
               <p>Home</p>
             </div>
             <div className="p-6 bg-muted">
