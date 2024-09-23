@@ -15,13 +15,13 @@ export default async function Navbar() {
   const user = await getUser();
 
   return (
-    <div className="bg-muted py-4">
+    <div className="bg-muted py-2">
       <div className="container flex items-center justify-between">
         <Link href={`/`} className="">
           <img
             src={"/original-logo.png"}
             alt="reddit logo"
-            className="max-h-12"
+            className="max-h-16"
           />
         </Link>
         <SearchBar />

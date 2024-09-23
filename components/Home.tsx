@@ -13,17 +13,14 @@ import {
 } from "./ui/card";
 import SiteWideRules from "./SiteWideRules";
 
-export default async function Home() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
+export default async function Home({ userId }: { userId?: string }) {
   return (
-    <main className="container pt-6">
+    <main className="max-w-7xl mx-auto pt-6">
       <h1 className="text-3xl font-semibold">Your Feed</h1>
       <div className="grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
         <section className="col-span-2">
-          <PostFeed subName="main" userId={user?.id} />
+          <PostFeed subName="main" userId={userId} />
         </section>
         {/*  subreddit info panel */}
         <section className="col-span-1 space-y-8">

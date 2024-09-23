@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import Providers from "@/components/Providers";
+import Toolbar from "@/components/Toolbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +17,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  //posts: upvoted, downvoted, saved,
+  //filters: top: day,week,month,year,all-time | new,
+  //show all subreddits
+  //profile: settings, logout btn
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen`}>
         <Providers>
           <Navbar />
-          <main className="max-w-7xl mx-auto">{children}</main>
+          <main className="">
+            {/* <div className="w-[300px] bg-black"></div> */}
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

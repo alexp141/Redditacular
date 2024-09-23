@@ -1,7 +1,5 @@
-import { JsonValue } from "@prisma/client/runtime/library";
 import prisma from "./db";
-import { CommentProps, PostInfo } from "./types";
-import { Comment } from "@prisma/client";
+import { CommentProps, GetSubscribedSubredditsType, PostInfo } from "./types";
 
 export async function checkIfSubredditExists(subName: string) {
   const subreddit = await prisma.subreddit.findFirst({
@@ -65,4 +63,17 @@ export async function getSubredditInfo(subName: string) {
   });
 
   return info;
+}
+
+export async function getSubscribedSubreddits(userId: string) {
+  const subreddits = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { subscripton: { select: { subreddit: true } } },
+  });
+
+  if (!subreddits) {
+    return null;
+  }
+
+  return subreddits.subscripton;
 }
