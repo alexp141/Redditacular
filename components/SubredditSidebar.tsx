@@ -10,17 +10,24 @@ import {
 } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { getSubredditInfo } from "@/lib/data";
+import SubscriptionForm from "./SubscriptionForm";
 
 export default async function SubredditSidebar({
   subName,
+  userId,
 }: {
   subName: string;
+  userId?: string;
 }) {
   const subredditInfo = await getSubredditInfo(subName);
-
   if (!subredditInfo) {
     return <p className="text-red-500">error loading Subreddit info...</p>;
   }
+  const res = await fetch(
+    `${process.env.URL}/api/subreddits/${subredditInfo.id}/isSubscribed?userId=${userId}`,
+    { next: { tags: ["isSubscribed"] } }
+  );
+  const isSubscribed = await res.json();
 
   return (
     <Card className="rounded-md overflow-hidden">
@@ -50,10 +57,15 @@ export default async function SubredditSidebar({
         </div>
         <Separator />
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex flex-col justify-between gap-2">
         <Button asChild className="w-full">
           <Link href={`/r/${subName}/create`}>Create Post</Link>
         </Button>
+        <SubscriptionForm
+          isSubscribed={isSubscribed}
+          userId={userId}
+          subredditId={subredditInfo.id}
+        />
       </CardFooter>
     </Card>
   );

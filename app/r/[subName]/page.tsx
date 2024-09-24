@@ -30,7 +30,7 @@ export default async function page({
           <PostFeed subName={params.subName} userId={user?.id} />
         </section>
         <section className="w-[35%] space-y-8">
-          <SubredditSidebar subName={params.subName} />
+          <SubredditSidebar subName={params.subName} userId={user.id} />
         </section>
       </div>
     </div>

@@ -13,7 +13,7 @@ import {
   ProfileFormValues,
   VoteType,
 } from "./types";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { Prisma } from "@prisma/client";
 
 export async function createSubreddit(formData: FormData) {
@@ -256,4 +256,63 @@ export async function updateProfile(data: ProfileFormValues) {
   });
 
   revalidatePath(`/settings`);
+}
+
+const subscribeSchema = z.object({
+  userId: z.string(),
+  subredditId: z.string(),
+});
+
+export async function subscribeToSubreddit(formData: FormData) {
+  const res = subscribeSchema.safeParse({
+    userId: formData.get("userId"),
+    subredditId: formData.get("subredditId"),
+  });
+
+  if (!res.success) {
+    throw new Error("Invalid user id");
+  }
+
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  const { subredditId, userId } = res.data;
+
+  await prisma.subscription.create({
+    data: { userId: userId, subredditId: subredditId },
+  });
+
+  //revalidate
+  revalidateTag("isSubscribed");
+}
+
+export async function unsubscribeToSubreddit(formData: FormData) {
+  const res = subscribeSchema.safeParse({
+    userId: formData.get("userId"),
+    subredditId: formData.get("subredditId"),
+  });
+
+  if (!res.success) {
+    throw new Error("Invalid user id");
+  }
+
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  const { subredditId, userId } = res.data;
+
+  await prisma.subscription.delete({
+    where: { userId_subredditId: { userId, subredditId } },
+  });
+
+  //revalidate
+  revalidateTag("isSubscribed");
 }

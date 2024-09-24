@@ -1,5 +1,5 @@
 import prisma from "./db";
-import { CommentProps, GetSubscribedSubredditsType, PostInfo } from "./types";
+import { CommentProps, PostInfo } from "./types";
 
 export async function checkIfSubredditExists(subName: string) {
   const subreddit = await prisma.subreddit.findFirst({

@@ -26,7 +26,8 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen`}>
         <Providers>
           <Navbar />
-          <main className="">
+          <Toolbar />
+          <main className="max-w-7xl mx-auto ">
             {/* <div className="w-[300px] bg-black"></div> */}
             {children}
           </main>

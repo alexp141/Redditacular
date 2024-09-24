@@ -7,7 +7,6 @@ export default async function Page() {
   const user = await getUser();
   return (
     <div>
-      <Toolbar userId={user?.id} />
       <Home userId={user?.id} />
     </div>
   );

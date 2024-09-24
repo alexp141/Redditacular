@@ -15,7 +15,7 @@ import SiteWideRules from "./SiteWideRules";
 
 export default async function Home({ userId }: { userId?: string }) {
   return (
-    <main className="max-w-7xl mx-auto pt-6">
+    <main className="pt-6">
       <h1 className="text-3xl font-semibold">Your Feed</h1>
       <div className="grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
