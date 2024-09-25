@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import Providers from "@/components/Providers";
-import Toolbar from "@/components/Toolbar";
+import ToolbarServer from "@/components/ToolbarServer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen`}>
         <Providers>
           <Navbar />
-          <Toolbar />
+          <ToolbarServer />
           <main className="max-w-7xl mx-auto ">
             {/* <div className="w-[300px] bg-black"></div> */}
             {children}

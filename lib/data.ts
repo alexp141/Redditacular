@@ -64,16 +64,38 @@ export async function getSubredditInfo(subName: string) {
 
   return info;
 }
+type SubscribedSubredditsResponse =
+  | ({
+      subreddit: {
+        name: string;
+      };
+    } & {
+      userId: string;
+      subredditId: string;
+    })[]
+  | null;
 
-export async function getSubscribedSubreddits(userId: string) {
-  const subreddits = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { subscripton: { select: { subreddit: true } } },
-  });
+export async function getSubscribedSubreddits(userId?: string) {
+  const res = await fetch(
+    `/api/subreddits/getSubscribedSubreddits?userId=${userId ?? ""}`,
+    { next: { tags: ["subscribedSubreddits"] } }
+  );
+  const subscribedSubreddits: SubscribedSubredditsResponse = await res.json();
 
-  if (!subreddits) {
-    return null;
-  }
+  return subscribedSubreddits;
+}
 
-  return subreddits.subscripton;
+export async function getFavoriteSubreddits(userId?: string) {
+  const res = await fetch(
+    `/api/subreddits/getFavoriteSubreddits?userId=${userId ?? ""}`,
+    {
+      next: {
+        tags: ["favoriteSubreddits"],
+      },
+    }
+  );
+  const favoriteSubreddits: {
+    subredditId: string;
+  }[] = await res.json();
+  return favoriteSubreddits;
 }

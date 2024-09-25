@@ -209,7 +209,7 @@ export async function createComment(formData: FormData) {
   const { comment, postId, replyToId, pathname } = res.data;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-
+  console.log("is authed while creating comment", user);
   if (!user) {
     redirect("/api/auth/login");
   }
@@ -315,4 +315,30 @@ export async function unsubscribeToSubreddit(formData: FormData) {
 
   //revalidate
   revalidateTag("isSubscribed");
+}
+
+export async function handleToolbarFavorites(
+  subredditId: string,
+  isFavorite: boolean
+) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
+  if (isFavorite) {
+    // unfavorite
+    await prisma.favoriteSubreddit.delete({
+      where: { userId_subredditId: { userId: user.id, subredditId } },
+    });
+  } else {
+    // favorite
+    await prisma.favoriteSubreddit.create({
+      data: { userId: user.id, subredditId },
+    });
+  }
+  console.log("server or client");
+  // revalidate
 }

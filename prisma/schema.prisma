@@ -33,11 +33,12 @@ model User {
   avatar    String?
   posts     Post[]
 
-  createdSubreddits Subreddit[]
-  subscripton       Subscription[]
-  postVotes         PostVote[]
-  comments          Comment[]
-  commentVotes      CommentVote[]
+  createdSubreddits  Subreddit[]
+  subscripton        Subscription[]
+  postVotes          PostVote[]
+  comments           Comment[]
+  commentVotes       CommentVote[]
+  favoriteSubreddits FavoriteSubreddit[]
 }
 
 model Subreddit {
@@ -48,8 +49,9 @@ model Subreddit {
   owner       User     @relation(fields: [ownerId], references: [id])
   ownerId     String
 
-  posts       Post[]
-  subscribers Subscription[]
+  posts         Post[]
+  subscribers   Subscription[]
+  userFavorites FavoriteSubreddit[]
 }
 
 model Subscription {
@@ -98,4 +100,13 @@ model CommentVote {
   vote      VoteType
 
   @@id([userId, commentId])
+}
+
+model FavoriteSubreddit {
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  subreddit   Subreddit @relation(fields: [subredditId], references: [id])
+  subredditId String
+
+  @@id([userId, subredditId])
 }

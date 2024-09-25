@@ -11,19 +11,15 @@ export async function GET(req: Request) {
 
   if (!userId) {
     console.log("returning null");
-    return Response.json(null);
+    return Response.json([]);
   }
 
   //find subreddits
-  const subreddits = await prisma.subscription.findMany({
+  const subreddits = await prisma.favoriteSubreddit.findMany({
     where: { userId },
-    include: {
-      subreddit: {
-        select: { name: true },
-      },
-    },
+    select: { subredditId: true },
   });
 
-  console.log("subscribed subreddits", subreddits);
+  console.log("favorite subreddits", subreddits);
   return Response.json(subreddits);
 }
