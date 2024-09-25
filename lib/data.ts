@@ -96,6 +96,7 @@ export async function getFavoriteSubreddits(userId?: string) {
   );
   const favoriteSubreddits: {
     subredditId: string;
+    name: string;
   }[] = await res.json();
   return favoriteSubreddits;
 }

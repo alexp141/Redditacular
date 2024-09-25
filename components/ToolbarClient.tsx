@@ -21,7 +21,7 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
     queryKey: ["subscribedSubreddits"],
     queryFn: async () => getSubscribedSubreddits(userId),
   });
-  const { data: favoriteSubreddits } = useQuery({
+  const { data: favoriteSubreddits, isPending: isPendingFavorites } = useQuery({
     queryKey: ["favoriteSubreddits"],
     queryFn: async () => getFavoriteSubreddits(userId),
   });
@@ -59,6 +59,7 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
                         : true
                     }
                     subredditId={subscription.subredditId}
+                    subredditName={subscription.subreddit.name}
                   />
                 </Link>
               </MenubarItem>
@@ -74,9 +75,11 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
       <Separator orientation="vertical" />
 
       <div className="p-1 flex">
-        {favoriteSubreddits?.map((elem) => {
-          return <p key={elem.subredditId}>{elem.subredditId}</p>;
-        })}
+        {isPendingFavorites && <p>Loading...</p>}
+        {!isPendingFavorites &&
+          favoriteSubreddits?.map((elem) => {
+            return <p key={elem.subredditId}>{elem.name}</p>;
+          })}
       </div>
     </Menubar>
   );

@@ -15,11 +15,17 @@ export async function GET(req: Request) {
   }
 
   //find subreddits
-  const subreddits = await prisma.favoriteSubreddit.findMany({
+  const data = await prisma.favoriteSubreddit.findMany({
     where: { userId },
-    select: { subredditId: true },
+    select: { subredditId: true, subreddit: { select: { name: true } } },
   });
 
+  const subreddits = data.map((elem) => {
+    return {
+      subredditId: elem.subredditId,
+      name: elem.subreddit.name,
+    };
+  });
   console.log("favorite subreddits", subreddits);
   return Response.json(subreddits);
 }

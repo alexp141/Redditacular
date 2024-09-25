@@ -9,10 +9,12 @@ export default function FavoriteStar({
   className,
   isFavorite,
   subredditId,
+  subredditName,
 }: {
   className?: string;
   isFavorite: boolean;
   subredditId: string;
+  subredditName: string;
 }) {
   const [isFavoriteLocal, setIsFavoriteLocal] = useState(isFavorite);
   const queryClient = useQueryClient();
@@ -39,13 +41,13 @@ export default function FavoriteStar({
       // Optimistically update to the new value
       queryClient.setQueryData(
         ["favoriteSubreddits"],
-        (old: Array<{ subredditId: string }>) => {
+        (old: Array<{ subredditId: string; name: string }>) => {
           if (isFavorite) {
             return (
               old?.filter((elem) => elem.subredditId !== subredditId) || []
             );
           } else {
-            return [...(old || []), { subredditId }];
+            return [...(old || []), { subredditId, name: subredditName }];
           }
         }
       );
@@ -65,7 +67,7 @@ export default function FavoriteStar({
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["favoriteSubreddits"] });
+      // queryClient.invalidateQueries({ queryKey: ["favoriteSubreddits"] });
     },
   });
 
