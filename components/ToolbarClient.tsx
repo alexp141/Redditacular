@@ -77,8 +77,23 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
       <div className="p-1 flex">
         {isPendingFavorites && <p>Loading...</p>}
         {!isPendingFavorites &&
+          favoriteSubreddits &&
+          favoriteSubreddits.length === 0 && (
+            <p className="text-muted-foreground">
+              (Your favorite subreddits will appear here)
+            </p>
+          )}
+        {!isPendingFavorites &&
           favoriteSubreddits?.map((elem) => {
-            return <p key={elem.subredditId}>{elem.name}</p>;
+            return (
+              <Link
+                href={`/r/${elem.name}`}
+                key={elem.subredditId}
+                className="hover:underline underline-offset-4"
+              >
+                {elem.name}
+              </Link>
+            );
           })}
       </div>
     </Menubar>

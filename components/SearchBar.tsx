@@ -18,7 +18,7 @@ import Link from "next/link";
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const listRef = useRef<HTMLDivElement>(null);
-  const { data, refetch, fetchStatus } = useQuery({
+  const { data, fetchStatus } = useQuery({
     queryKey: ["search", query],
     queryFn: async () => {
       if (query.length <= 0) return [[], []];
