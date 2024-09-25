@@ -33,7 +33,7 @@ async function getSubreddits(query: string) {
 async function getPosts(query: string) {
   const data = await prisma.post.findMany({
     where: {
-      title: { startsWith: query, mode: "insensitive" },
+      title: { contains: query, mode: "insensitive" },
     },
     select: { title: true, id: true, subName: true },
     take: 5,

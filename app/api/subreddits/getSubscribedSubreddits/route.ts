@@ -10,7 +10,6 @@ export async function GET(req: Request) {
   const userId = validation.data;
 
   if (!userId) {
-    console.log("returning null");
     return Response.json(null);
   }
 
@@ -24,6 +23,5 @@ export async function GET(req: Request) {
     },
   });
 
-  console.log("subscribed subreddits", subreddits);
   return Response.json(subreddits);
 }

@@ -1,4 +1,5 @@
 "use client";
+
 import { useQuery } from "@tanstack/react-query";
 import {
   Command,
@@ -13,6 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { Post, Subreddit } from "@prisma/client";
 import Link from "next/link";
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const listRef = useRef<HTMLDivElement>(null);
@@ -48,20 +50,22 @@ export default function SearchBar() {
     };
   }, [checkifOutsideClick]);
 
-  const handleSearch = debounce(() => {
-    refetch();
-  }, 300);
+  const handleSearch = useCallback(
+    debounce((query: string) => {
+      setQuery(query);
+      console.log("running");
+    }, 300),
+    []
+  );
 
   function handleNewInput(query: string) {
-    setQuery(query);
-    handleSearch();
+    handleSearch(query);
   }
 
   function closeList() {
     setQuery("");
   }
 
-  console.log("data", data);
   return (
     <div className=" gap-2 flex w-full max-w-sm items-center">
       <div className="w-full">
@@ -70,7 +74,6 @@ export default function SearchBar() {
             placeholder="Search Communities and posts"
             className="w-full "
             onValueChange={(query) => handleNewInput(query)}
-            value={query}
           />
           <CommandList className="absolute bg-white rounded-b-md top-full border w-full z-50">
             <div ref={listRef}>
