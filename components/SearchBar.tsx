@@ -14,6 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { Post, Subreddit } from "@prisma/client";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -69,10 +70,16 @@ export default function SearchBar() {
   return (
     <div className=" gap-2 flex w-full max-w-sm items-center">
       <div className="w-full">
-        <Command className="relative overflow-visible">
+        <Command
+          className={cn(
+            "relative",
+            { "overflow-visible": query !== "" },
+            { "overflow-hidden": query === "" }
+          )}
+        >
           <CommandInput
             placeholder="Search Communities and posts"
-            className="w-full "
+            className="w-full border-none"
             onValueChange={(query) => handleNewInput(query)}
           />
           <CommandList className="absolute bg-white rounded-b-md top-full border w-full z-50">

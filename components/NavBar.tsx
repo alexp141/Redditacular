@@ -15,7 +15,7 @@ export default async function Navbar() {
   const user = await getUser();
 
   return (
-    <div className="bg-muted py-2">
+    <div className="bg-orange-500 py-2">
       <div className="container flex items-center justify-between">
         <Link href={`/`} className="">
           <img
@@ -28,7 +28,7 @@ export default async function Navbar() {
         <div className="flex gap-2">
           {user ? (
             <>
-              <ProfileDropdown user={user} />
+              <div></div>
             </>
           ) : (
             <>

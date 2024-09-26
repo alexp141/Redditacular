@@ -27,18 +27,20 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
   });
 
   return (
-    <Menubar>
+    <Menubar className="border-t-0 border-b-2 border-x-0 border-orange-500 bg-[#ffe8d2] rounded-none shadow-md">
       <MenubarMenu>
-        <MenubarTrigger>Profile</MenubarTrigger>
+        <MenubarTrigger className="focus:bg-red-500">Profile</MenubarTrigger>
         <MenubarContent>
-          <MenubarItem>Settings</MenubarItem>
+          <MenubarItem>
+            <Link href={`/settings`}>Settings</Link>
+          </MenubarItem>
           <MenubarSeparator />
           <MenubarItem className="focus:bg-rose-500">
             <LogoutLink>Logout</LogoutLink>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      <Separator orientation="vertical" />
+      <Separator orientation="vertical" className="bg-orange-500" />
       <MenubarMenu>
         <MenubarTrigger>My Subreddits</MenubarTrigger>
         <MenubarContent>
@@ -72,7 +74,7 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
           )}
         </MenubarContent>
       </MenubarMenu>
-      <Separator orientation="vertical" />
+      <Separator orientation="vertical" className="bg-orange-500" />
 
       <div className="p-1 flex">
         {isPendingFavorites && <p>Loading...</p>}

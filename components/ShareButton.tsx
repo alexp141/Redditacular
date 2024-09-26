@@ -22,7 +22,7 @@ export default function ShareButton({ link }: { link: string }) {
           });
         }
       }}
-      className="flex gap-1 items-center justify-center border-none"
+      className="flex gap-1 items-center justify-center border-none bg-transparent"
     >
       <Share />
       <p>Share</p>

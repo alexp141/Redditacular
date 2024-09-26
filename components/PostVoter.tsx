@@ -37,23 +37,32 @@ export default function PostVoter({
         size={"sm"}
         variant={"ghost"}
         onClick={() => vote({ postId, voteType: "UPVOTE" })}
+        className="hover:bg-orange-300"
       >
         <ArrowBigUpIcon
           className={cn("h-6 w-6 text-slate-700", {
-            "text-sky-400 fill-sky-400": currentVoteType === "UPVOTE",
+            "text-orange-500 fill-orange-500": currentVoteType === "UPVOTE",
           })}
         />
       </Button>
 
-      <p>{voteCount}</p>
+      <p
+        className={cn(
+          { "text-orange-500": currentVoteType === "UPVOTE" },
+          { "text-[#5b89ff]": currentVoteType === "DOWNVOTE" }
+        )}
+      >
+        {voteCount}
+      </p>
       <Button
         size={"sm"}
         variant={"ghost"}
         onClick={() => vote({ postId, voteType: "DOWNVOTE" })}
+        className="hover:bg-[#5b89ff]"
       >
         <ArrowBigDownIcon
           className={cn("h-6 w-6 text-slate-700", {
-            "text-rose-700 fill-rose-700": currentVoteType === "DOWNVOTE",
+            "text-[#5b89ff] fill-[#5b89ff]": currentVoteType === "DOWNVOTE",
           })}
         />
       </Button>

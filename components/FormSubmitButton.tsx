@@ -15,7 +15,7 @@ export default function FormSubmitButton({
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" className={cn("", className)}>
+    <Button variant={"orange"} type="submit" className={cn("", className)}>
       {pending ? "Loading..." : children}
     </Button>
   );

@@ -74,9 +74,12 @@ export default function FavoriteStar({
   return (
     <StarIcon
       className={cn(
+        "text-amber-400",
         className,
-        { "hover:fill-black fill-white": !isFavoriteLocal },
-        { "hover:fill-white fill-black": isFavoriteLocal }
+        {
+          "hover:fill-amber-400  fill-white": !isFavoriteLocal,
+        },
+        { "hover:fill-white fill-amber-400": isFavoriteLocal }
       )}
       onClick={(e) => {
         e.preventDefault();

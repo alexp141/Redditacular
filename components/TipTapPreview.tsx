@@ -15,7 +15,7 @@ export default function TipTapPreview({
         <TipTap.Editor />
       </TipTap>
 
-      <div className="absolute bottom-0 inset-x-0 h-24 w-full bg-gradient-to-t from-white to-transparent"></div>
+      <div className="absolute bottom-0 inset-x-0 h-24 w-full bg-gradient-to-t from-snow-500 to-transparent"></div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ import {
 
 export default function SiteWideRules() {
   return (
-    <Card className="rounded-md overflow-hidden">
+    <Card className="rounded-md overflow-hidden border-2 border-orange-500">
       <CardHeader className="bg-orange-500">
         <CardTitle className="flex items-center gap-2">
           <img

@@ -27,7 +27,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           <ToolbarServer />
-          <main className="max-w-7xl mx-auto ">
+          <main className="max-w-7xl mx-auto  ">
             {/* <div className="w-[300px] bg-black"></div> */}
             {children}
           </main>

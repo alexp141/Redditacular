@@ -30,7 +30,7 @@ export default async function SubredditSidebar({
   const isSubscribed = await res.json();
 
   return (
-    <Card className="rounded-md overflow-hidden">
+    <Card className="rounded-md overflow-hidden shadow-sm">
       <CardHeader className="bg-muted">
         <CardTitle>About r/{`${subName}`}</CardTitle>
         <CardDescription className="text-zinc-500">Description</CardDescription>
@@ -58,7 +58,7 @@ export default async function SubredditSidebar({
         <Separator />
       </CardContent>
       <CardFooter className="flex flex-col justify-between gap-2">
-        <Button asChild className="w-full">
+        <Button asChild className="w-full" variant={"orange"}>
           <Link href={`/r/${subName}/create`}>Create Post</Link>
         </Button>
         <SubscriptionForm

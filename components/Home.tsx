@@ -25,7 +25,7 @@ export default async function Home({ userId }: { userId?: string }) {
         {/*  subreddit info panel */}
         <section className="col-span-1 space-y-8">
           <div className="rounded-md overflow-hidden">
-            <div className="bg-emerald-500 flex gap-2 p-6 text-lg font-semibold items-center">
+            <div className="bg-orange-500 flex gap-2 p-6 text-lg font-semibold items-center">
               <img src="/reddit-1.svg" alt="reddit icon" className="max-h-12" />
               <p>Home</p>
             </div>
