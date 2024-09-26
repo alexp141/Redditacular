@@ -31,9 +31,11 @@ export default async function SubredditSidebar({
 
   return (
     <Card className="rounded-md overflow-hidden shadow-sm">
-      <CardHeader className="bg-muted">
+      <CardHeader className="bg-orange-500">
         <CardTitle>About r/{`${subName}`}</CardTitle>
-        <CardDescription className="text-zinc-500">Description</CardDescription>
+        <CardDescription className="text-black_olive-100">
+          Description
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex justify-between mt-4">

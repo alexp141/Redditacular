@@ -20,7 +20,7 @@ export default function PostPreview({
 }) {
   return (
     <div
-      className="rounded-md overflow-hidden border shadow p-4 bg-snow"
+      className="rounded-md overflow-hidden border shadow p-4 bg-white"
       ref={innerRef}
     >
       <div className="flex">

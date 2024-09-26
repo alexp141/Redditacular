@@ -29,7 +29,7 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
   return (
     <Menubar className="border-t-0 border-b-2 border-x-0 border-orange-500 bg-[#ffe8d2] rounded-none shadow-md">
       <MenubarMenu>
-        <MenubarTrigger className="focus:bg-red-500">Profile</MenubarTrigger>
+        <MenubarTrigger className="">Profile</MenubarTrigger>
         <MenubarContent>
           <MenubarItem>
             <Link href={`/settings`}>Settings</Link>

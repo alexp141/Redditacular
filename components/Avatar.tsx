@@ -6,7 +6,7 @@ export default function Avatar({
   className?: string;
 }) {
   return (
-    <div className={`w-10 h-full rounded-full overflow-hidden ${className}`}>
+    <div className={`w-10 h-10 rounded-full overflow-hidden ${className}`}>
       <img src={profilePic ?? "/pfpfallback.png"} alt="avatar" />
     </div>
   );

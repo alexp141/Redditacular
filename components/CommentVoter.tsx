@@ -59,28 +59,37 @@ export default function CommentVoter({
   });
 
   return (
-    <div className=" flex items-center p-2">
+    <div className=" flex items-center gap-1">
       <Button
         size={"sm"}
         variant={"ghost"}
         onClick={() => vote({ commentId, voteType: "UPVOTE" })}
+        className="p-0"
       >
         <ArrowBigUpIcon
           className={cn("h-6 w-6 text-slate-700", {
-            "text-sky-400 fill-sky-400": currentVoteType === "UPVOTE",
+            "text-orange-500 fill-orange-500": currentVoteType === "UPVOTE",
           })}
         />
       </Button>
 
-      <p>{voteCount}</p>
+      <p
+        className={cn(
+          { "text-orange-500": currentVoteType === "UPVOTE" },
+          { "text-[#5b89ff]": currentVoteType === "DOWNVOTE" }
+        )}
+      >
+        {voteCount}
+      </p>
       <Button
         size={"sm"}
         variant={"ghost"}
         onClick={() => vote({ commentId, voteType: "DOWNVOTE" })}
+        className="p-0"
       >
         <ArrowBigDownIcon
           className={cn("h-6 w-6 text-slate-700", {
-            "text-rose-700 fill-rose-700": currentVoteType === "DOWNVOTE",
+            "text-[#5b89ff] fill-[#5b89ff]": currentVoteType === "DOWNVOTE",
           })}
         />
       </Button>

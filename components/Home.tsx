@@ -34,7 +34,7 @@ export default async function Home({ userId }: { userId?: string }) {
                 Your personal frontpage. Come here to check in with your
                 favorite communities.
               </p>
-              <Button asChild>
+              <Button asChild variant={"orange"}>
                 <Link href={"/create"} className="w-full mt-6">
                   Create Community
                 </Link>
