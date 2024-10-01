@@ -66,10 +66,11 @@ export default function CommentReplies({
           });
         })}
         {hasNextPage && (
-          <div>
+          <div className="mx-auto">
             <button
               onClick={() => fetchNextPage()}
               disabled={!hasNextPage || isFetchingNextPage}
+              className="text-blue-800 hover:underline underline-offset-2"
             >
               {isFetchingNextPage ? "Loading more..." : "Load More"}
             </button>

@@ -63,7 +63,7 @@ export default async function Page({
         <CommentSection postId={post.id} userId={user?.id} />
       </section>
       <section className="w-[35%]">
-        <SubredditSidebar subName={params.subName} />
+        <SubredditSidebar subName={params.subName} userId={user.id} />
       </section>
     </div>
   );

@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { subscribeToSubreddit, unsubscribeToSubreddit } from "@/lib/actions";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function SubscriptionForm({
   isSubscribed,
@@ -48,7 +49,11 @@ export default function SubscriptionForm({
     <form action={handleSubscription} className="w-full">
       <input type="hidden" name="userId" value={userId} />
       <input type="hidden" name="subredditId" value={subredditId} />
-      <FormSubmitButton className="w-full">
+      <FormSubmitButton
+        className={cn("w-full", {
+          "hover:bg-rose-700": isSubscribed,
+        })}
+      >
         {isSubscribed ? "Unsubscribe" : "Subscribe"}
       </FormSubmitButton>
     </form>

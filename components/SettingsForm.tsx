@@ -134,7 +134,7 @@ export default function SettingsForm({ userInfo }: { userInfo: User }) {
             </FormItem>
           )}
         /> */}
-        <Button>
+        <Button variant={"orange"}>
           {form.formState.isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>

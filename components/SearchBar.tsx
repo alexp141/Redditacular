@@ -78,7 +78,7 @@ export default function SearchBar() {
           )}
         >
           <CommandInput
-            placeholder="Search Communities and posts"
+            placeholder="Search communities and posts"
             className="w-full border-none"
             onValueChange={(query) => handleNewInput(query)}
           />

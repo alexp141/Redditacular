@@ -5,5 +5,5 @@ export default async function ToolbarServer() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  return <ToolbarClient userId={user.id} />;
+  return <ToolbarClient userId={user?.id} />;
 }

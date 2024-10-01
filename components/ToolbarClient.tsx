@@ -27,17 +27,21 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
   });
 
   return (
-    <Menubar className="border-t-0 border-b-2 border-x-0 border-orange-500 bg-[#ffe8d2] rounded-none shadow-md">
+    <Menubar className="border-t-0 bg-muted rounded-none shadow-sm">
       <MenubarMenu>
         <MenubarTrigger className="">Profile</MenubarTrigger>
         <MenubarContent>
-          <MenubarItem>
+          <MenubarItem asChild>
             <Link href={`/settings`}>Settings</Link>
           </MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem className="focus:bg-rose-500">
-            <LogoutLink>Logout</LogoutLink>
-          </MenubarItem>
+          {userId && (
+            <>
+              <MenubarSeparator />
+              <MenubarItem className="focus:bg-rose-500" asChild>
+                <LogoutLink>Logout</LogoutLink>
+              </MenubarItem>
+            </>
+          )}
         </MenubarContent>
       </MenubarMenu>
       <Separator orientation="vertical" className="bg-orange-500" />

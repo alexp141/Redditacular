@@ -31,7 +31,7 @@ export default function CreateSubredditForm() {
   }
 
   return (
-    <form action={handleSubmit} className="space-y-6">
+    <form action={handleSubmit} className="space-y-6 p-2 mt-8">
       <h1 className="text-2xl font-bold mt-4">Create a New Subreddit</h1>
       <Separator className="my-4" />
       <div>
