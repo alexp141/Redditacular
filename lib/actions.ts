@@ -36,8 +36,12 @@ export async function createSubreddit(formData: FormData) {
   }
 
   try {
-    await prisma.subreddit.create({
+    const res = await prisma.subreddit.create({
       data: { name: subName, ownerId: user.id, description },
+      select: { id: true },
+    });
+    await prisma.subscription.create({
+      data: { userId: user.id, subredditId: res.id },
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

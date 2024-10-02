@@ -8,13 +8,16 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import FormSubmitButton from "./FormSubmitButton";
 import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CreateSubredditForm() {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   async function handleSubmit(formData: FormData) {
     try {
       await createSubreddit(formData);
+      queryClient.invalidateQueries({ queryKey: ["subscribedSubreddits"] });
       toast({
         title: "Success",
         description: "Your new community has been succesfully created!",
