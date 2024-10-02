@@ -11,6 +11,7 @@ import {
 import { Separator } from "./ui/separator";
 import { getSubredditInfo } from "@/lib/data";
 import SubscriptionForm from "./SubscriptionForm";
+import { format } from "date-fns";
 
 export default async function SubredditSidebar({
   subName,
@@ -33,8 +34,8 @@ export default async function SubredditSidebar({
     <Card className="rounded-md overflow-hidden shadow-sm">
       <CardHeader className="bg-orange-500">
         <CardTitle>About r/{`${subName}`}</CardTitle>
-        <CardDescription className="text-black_olive-100">
-          Description
+        <CardDescription className="text-zinc-700">
+          {subredditInfo.description}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -45,7 +46,7 @@ export default async function SubredditSidebar({
         <Separator />
         <div className="flex justify-between">
           <p>Created on</p>
-          <p>{new Date(subredditInfo.createdAt).toDateString()}</p>
+          <p>{format(new Date(subredditInfo.createdAt), "PPP")}</p>
         </div>
         <Separator />
         <div className="flex justify-between">
