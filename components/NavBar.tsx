@@ -4,9 +4,7 @@ import {
   RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { Button } from "./ui/button";
-import { Command, CommandInput } from "./ui/command";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import ProfileDropdown from "./ProfileDropdown";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 
@@ -15,8 +13,8 @@ export default async function Navbar() {
   const user = await getUser();
 
   return (
-    <div className="bg-orange-500 py-2">
-      <div className="container flex items-center justify-between">
+    <div className="p-4 bg-orange-500 py-2">
+      <div className="flex items-center justify-between">
         <Link href={`/`} className="">
           <img
             src={"/original-logo.png"}
