@@ -32,7 +32,7 @@ export async function createSubreddit(formData: FormData) {
   const user = await getUser();
 
   if (!user) {
-    redirect("/api/auth/login");
+    return redirect("/api/auth/login");
   }
 
   try {
