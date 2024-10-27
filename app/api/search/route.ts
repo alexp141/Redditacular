@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 
-export async function GET(res: Response) {
-  const url = new URL(res.url);
+export async function GET(req: Request) {
+  const url = new URL(req.url);
 
   const query = url.searchParams.get("query");
   if (!query) {
