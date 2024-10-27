@@ -14,7 +14,7 @@ export async function GET(
   const userId = validationRes.data;
 
   if (!userId) {
-    return false;
+    return Response.json(false);
   }
 
   const res = await prisma.subscription.findUnique({
