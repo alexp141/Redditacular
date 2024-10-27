@@ -5,6 +5,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import PostPreview from "./PostPreview";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import SkeletonFeed from "./SkeletonFeed";
 
 export default function PostFeed({
   subName,
@@ -49,7 +50,7 @@ export default function PostFeed({
   }, [inView, hasNextPage, fetchNextPage]);
 
   return status === "pending" ? (
-    <p>Loading...</p>
+    <SkeletonFeed />
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
