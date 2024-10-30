@@ -29,7 +29,9 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
   return (
     <Menubar className="border-t-0 bg-muted rounded-none shadow-sm">
       <MenubarMenu>
-        <MenubarTrigger className="">Profile</MenubarTrigger>
+        <MenubarTrigger className="hover:bg-zinc-300 data-[state=open]:bg-zinc-300">
+          Profile
+        </MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link href={`/settings`}>Settings</Link>
@@ -46,11 +48,13 @@ export default function ToolbarClient({ userId }: { userId?: string }) {
       </MenubarMenu>
       <Separator orientation="vertical" className="bg-orange-500" />
       <MenubarMenu>
-        <MenubarTrigger>My Subreddits</MenubarTrigger>
+        <MenubarTrigger className="hover:bg-zinc-300 data-[state=open]:bg-zinc-300 ">
+          My Subreddits
+        </MenubarTrigger>
         <MenubarContent>
           {subscribedSubreddits?.map((subscription) => {
             return (
-              <MenubarItem key={subscription.subredditId}>
+              <MenubarItem key={subscription.subredditId} asChild>
                 <Link
                   href={`/r/${subscription.subreddit.name}`}
                   className="flex justify-between items-center w-full"
