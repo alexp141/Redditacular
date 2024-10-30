@@ -1,14 +1,15 @@
 import CreateSubredditForm from "@/components/CreateSubredditForm";
-import FormSubmitButton from "@/components/FormSubmitButton";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import { createSubreddit } from "@/lib/actions";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
   return (
     <main className=" max-w-5xl mx-auto">
       <CreateSubredditForm />
