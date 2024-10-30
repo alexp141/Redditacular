@@ -43,8 +43,8 @@ export default async function Page({
   }, 0);
 
   return (
-    <div className="flex gap-10 mt-10">
-      <section className="w-[65%] flex flex-col gap-4">
+    <div className="md:flex gap-10 mt-10">
+      <section className="md:w-[65%] flex flex-col gap-4">
         <Link
           href={`/r/${params.subName}`}
           className="space-x-4 flex my-4 w-fit"
@@ -62,7 +62,7 @@ export default async function Page({
         <CommentCreator postId={post.id} />
         <CommentSection postId={post.id} userId={user?.id} />
       </section>
-      <section className="w-[35%]">
+      <section className="hidden md:block w-[35%]">
         <SubredditSidebar subName={params.subName} userId={user.id} />
       </section>
     </div>

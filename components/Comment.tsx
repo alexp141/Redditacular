@@ -26,9 +26,11 @@ export default function Comment({
   userId?: string;
 }) {
   const [isReplying, setIsReplying] = useState(false);
-  //   console.log(comment.createdAt);
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-x-4" key={comment.id}>
+    <div
+      className="grid grid-cols-[auto_1fr] gap-x-4 text-xs md:text-base"
+      key={comment.id}
+    >
       <Avatar profilePic={comment.author.avatar} className="" />
       <div className="flex flex-col w-full">
         <div className="flex justify-between gap-4">
@@ -41,7 +43,7 @@ export default function Comment({
           <p>{`${comment.text}`}</p>
         </div>
         {/* comment voter */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center md:gap-4 ">
           <CommentVoter
             commentId={comment.id}
             initialRating={initialRating}
@@ -50,7 +52,7 @@ export default function Comment({
           {"_count" in comment && comment._count.comments > 0 && (
             <Button
               variant={"ghost"}
-              className="hover:underline underline-offset-4"
+              className="hover:underline underline-offset-4 text-xs md:text-base"
             >
               {comment._count.comments === 1 ? (
                 <p>{comment._count.comments} Commment</p>

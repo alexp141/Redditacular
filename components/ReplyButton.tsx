@@ -13,12 +13,12 @@ export default function ReplyButton({
     <Button
       type="button"
       variant={"ghost"}
-      className="flex gap-2 hover:fill-black hover:text-sky-500"
+      className="flex gap-2 hover:fill-black hover:text-sky-500 text-xs md:text-base"
       onClick={() => {
         setIsReplying(true);
       }}
     >
-      <MessageSquareQuoteIcon className="h-6 w-6" />
+      <MessageSquareQuoteIcon className="h-4 w-4 md:h-6 md:w-6" />
       <p>Reply</p>
     </Button>
   );
