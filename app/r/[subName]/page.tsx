@@ -25,11 +25,11 @@ export default async function page({
   return (
     <div className="mt-10">
       <div className="flex mx-auto gap-10">
-        <section className="w-[65%]">
+        <section className="md:w-[65%]">
           <h1 className="text-5xl font-bold mb-6">r/{params.subName}</h1>
           <PostFeed subName={params.subName} userId={user?.id} />
         </section>
-        <section className="w-[35%] space-y-8">
+        <section className="hidden md:block md:w-[35%] md:space-y-8">
           <SubredditSidebar subName={params.subName} userId={user?.id} />
         </section>
       </div>
