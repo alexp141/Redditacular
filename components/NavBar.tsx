@@ -14,7 +14,7 @@ export default async function Navbar() {
 
   return (
     <div className="p-4 bg-orange-500 py-2">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2 sm:gap-0">
         <Link href={`/`} className="">
           <img
             src={"/original-logo.png"}

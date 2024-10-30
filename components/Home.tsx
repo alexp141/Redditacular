@@ -17,13 +17,13 @@ export default async function Home({ userId }: { userId?: string }) {
   return (
     <main className="pt-6">
       <h1 className="text-3xl font-semibold">Your Feed</h1>
-      <div className="grid grid-cols-3 mt-6 gap-x-8">
+      <div className="md:grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
         <section className="col-span-2">
           <PostFeed subName="main" userId={userId} />
         </section>
         {/*  subreddit info panel */}
-        <section className="col-span-1 space-y-8">
+        <section className="hidden md:block col-span-1 space-y-8">
           <div className="rounded-md overflow-hidden">
             <div className="bg-orange-500 flex gap-2 p-6 text-lg font-semibold items-center">
               <img src="/reddit-1.svg" alt="reddit icon" className="max-h-12" />
