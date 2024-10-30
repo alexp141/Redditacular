@@ -51,7 +51,7 @@ export default async function SubredditSidebar({
         <Separator />
         <div className="flex justify-between">
           <p>Members</p>
-          <p>{subredditInfo._count.subscribers + 1}</p>
+          <p>{subredditInfo._count.subscribers}</p>
         </div>
         <Separator />
         <div className="flex justify-between">
