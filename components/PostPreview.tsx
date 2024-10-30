@@ -28,7 +28,7 @@ export default function PostPreview({
           <div className="text-xs text-gray-500 flex items-center">
             <Link
               className="text-sm hover:underline underline-offset-2"
-              href={`r/${post.subName}`}
+              href={`/r/${post.subName}`}
             >
               {`r/${post.subName}`}
             </Link>
