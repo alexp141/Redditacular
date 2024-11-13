@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import SiteWideRules from "./SiteWideRules";
+import Filters from "./Filters";
 
 export default async function Home({ userId }: { userId?: string }) {
   return (
@@ -20,6 +21,9 @@ export default async function Home({ userId }: { userId?: string }) {
       <div className="md:grid grid-cols-3 mt-6 gap-x-8">
         {/*  feed */}
         <section className="col-span-2">
+          {/* filters */}
+          {/* //filters: top: day,week,month,year,all-time | new, */}
+          <Filters />
           <PostFeed subName="main" userId={userId} />
         </section>
         {/*  subreddit info panel */}
