@@ -42,7 +42,7 @@ export async function GET(req: Request) {
       },
       take: Number(process.env.MAXIMUM_POSTS_PER_FEED),
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     });
   } else {
@@ -70,7 +70,7 @@ export async function GET(req: Request) {
         id: cursor,
       },
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     });
   }
