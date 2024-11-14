@@ -1,3 +1,4 @@
+import { ReadonlyURLSearchParams } from "next/navigation";
 import prisma from "./db";
 import { CommentProps, PostInfo } from "./types";
 
@@ -15,11 +16,15 @@ export async function checkIfSubredditExists(subName: string) {
 export async function getPosts({
   pageParam,
   subName,
+  searchParams,
 }: {
   pageParam: number;
   subName: string;
+  searchParams: ReadonlyURLSearchParams;
 }) {
-  const res = await fetch(`/api/test?subName=${subName}&cursor=${pageParam}`);
+  const res = await fetch(
+    `/api/test?subName=${subName}&cursor=${pageParam}&${searchParams.toString()}`
+  );
   const data: PostInfo[] = await res.json();
   return data;
 }

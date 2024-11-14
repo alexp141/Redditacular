@@ -17,7 +17,6 @@ export default function Filters() {
 
   function updateSearchParams(filters: object) {
     const params = new URLSearchParams();
-    console.log(Object.entries(filters));
     Object.entries(filters).map(([key, value]) => {
       params.set(key, value);
     });
@@ -26,7 +25,6 @@ export default function Filters() {
 
   function handleSelection(filterObject: object) {
     updateSearchParams(filterObject);
-    console.log("something was selected");
   }
 
   return (

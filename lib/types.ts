@@ -51,6 +51,8 @@ export type PostInfo = {
   createdAt: Date;
   authorId: string;
   subName: string;
+} & {
+  voteRating: number;
 };
 
 export const profileFormSchema = z.object({

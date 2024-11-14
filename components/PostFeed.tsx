@@ -6,6 +6,7 @@ import PostPreview from "./PostPreview";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import SkeletonFeed from "./SkeletonFeed";
+import { useSearchParams } from "next/navigation";
 
 export default function PostFeed({
   subName,
@@ -14,6 +15,7 @@ export default function PostFeed({
   subName: string;
   userId?: string;
 }) {
+  const searchParams = useSearchParams();
   const {
     data,
     error,
@@ -23,8 +25,8 @@ export default function PostFeed({
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["posts", subName],
-    queryFn: ({ pageParam }) => getPosts({ pageParam, subName }),
+    queryKey: ["posts", subName, searchParams.toString()],
+    queryFn: ({ pageParam }) => getPosts({ pageParam, subName, searchParams }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
       if (
@@ -57,35 +59,37 @@ export default function PostFeed({
     <>
       <div className="flex flex-col gap-4 w-full">
         {data.pages.flatMap((posts) =>
-          posts.map((post, postIndex) => {
-            let userVoteType = "NONE";
-            const voteRating = post.votes.reduce((acc, curr) => {
-              if (curr.userId === userId) {
-                userVoteType = curr.vote;
-              }
-              if (curr.vote === "UPVOTE") {
-                return acc + 1;
-              } else {
-                return acc - 1;
-              }
-            }, 0);
-            return postIndex === posts.length - 1 ? (
-              <PostPreview
-                innerRef={ref}
-                key={post.id}
-                post={post}
-                voteRating={voteRating}
-                userVoteType={userVoteType}
-              />
-            ) : (
-              <PostPreview
-                key={post.id}
-                post={post}
-                voteRating={voteRating}
-                userVoteType={userVoteType}
-              />
-            );
-          })
+          posts
+            .sort((post1, post2) => {
+              if (searchParams.get("type"))
+                //if the user is searching by "top"
+                return post2.voteRating - post1.voteRating;
+              else return 0;
+            })
+            .map((post, postIndex) => {
+              let userVoteType = "NONE";
+              post.votes.forEach((curr) => {
+                if (curr.userId === userId) {
+                  userVoteType = curr.vote;
+                }
+              });
+              return postIndex === posts.length - 1 ? (
+                <PostPreview
+                  innerRef={ref}
+                  key={post.id}
+                  post={post}
+                  voteRating={post.voteRating}
+                  userVoteType={userVoteType}
+                />
+              ) : (
+                <PostPreview
+                  key={post.id}
+                  post={post}
+                  voteRating={post.voteRating}
+                  userVoteType={userVoteType}
+                />
+              );
+            })
         )}
 
         <div className="flex justify-center items-center">
