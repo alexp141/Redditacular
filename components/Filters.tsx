@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Menubar,
   MenubarContent,
@@ -11,9 +11,13 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "./ui/menubar";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 export default function Filters() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [selection, setSelection] = useState(searchParams.get("sort") || "New");
 
   function updateSearchParams(filters: object) {
     const params = new URLSearchParams();
@@ -23,8 +27,17 @@ export default function Filters() {
     router.push(`?${params.toString()}`);
   }
 
-  function handleSelection(filterObject: object) {
+  function handleSelection(filterObject: { sort: string; type?: string }) {
     updateSearchParams(filterObject);
+    setSelection((curr) => {
+      if (filterObject.sort === "top") {
+        if (filterObject.type === "all-time") {
+          return `Top of all time`;
+        }
+        return `Top of the ${filterObject.type}`;
+      }
+      return "New";
+    });
   }
 
   return (
@@ -32,7 +45,9 @@ export default function Filters() {
       {/* //filters: top: day,week,month,year,all-time  new, */}
       <Menubar>
         <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
+          <MenubarTrigger>
+            {selection} <ChevronDown />
+          </MenubarTrigger>
           <MenubarContent>
             <MenubarItem onSelect={() => handleSelection({ sort: "new" })}>
               New
