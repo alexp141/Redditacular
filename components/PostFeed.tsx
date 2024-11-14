@@ -91,7 +91,7 @@ export default function PostFeed({
               );
             })
         )}
-
+        {data.pages?.[0].length === 0 && <p>No posts to show!</p>}
         <div className="flex justify-center items-center">
           {isFetchingNextPage ? <p>loading...</p> : null}
         </div>
