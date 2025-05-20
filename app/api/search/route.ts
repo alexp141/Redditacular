@@ -1,5 +1,9 @@
 import prisma from "@/lib/db";
 
+// Force this route to be dynamic
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
 
