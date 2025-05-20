@@ -2,6 +2,10 @@ import prisma from "@/lib/db";
 import { sub } from "date-fns";
 import { NextResponse } from "next/server";
 
+// Force this route to be dynamic
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function subTime(date: Date, type: string = "all-time") {
   if (type === "day") {
     return sub(date, { days: 1 });
