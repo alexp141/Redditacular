@@ -2,7 +2,7 @@ import prisma from "@/lib/db";
 import { sub } from "date-fns";
 import { NextResponse } from "next/server";
 
-function subTime(date: Date, type: string) {
+function subTime(date: Date, type: string = "all-time") {
   if (type === "day") {
     return sub(date, { days: 1 });
   } else if (type === "week") {
@@ -11,10 +11,12 @@ function subTime(date: Date, type: string) {
     return sub(date, { months: 1 });
   } else if (type === "year") {
     return sub(date, { years: 1 });
-  } else if (type === "all-time") {
-    return sub(date, { years: 50 }); //"all-time" value
+  } else {
+    // Default to "all-time" for any invalid or missing value
+    return sub(date, { years: 50 });
   }
 }
+
 export async function GET(req: Request) {
   const searchParams = new URL(req.url).searchParams;
   const cursor = Number(searchParams.get("cursor"));
