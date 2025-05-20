@@ -1,6 +1,10 @@
 import prisma from "@/lib/db";
 import { z } from "zod";
 
+// Force this route to be dynamic
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(
   req: Request,
   { params }: { params: { subredditId: string } }
