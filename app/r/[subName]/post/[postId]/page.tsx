@@ -63,7 +63,7 @@ export default async function Page({
         <CommentSection postId={post.id} userId={user?.id} />
       </section>
       <section className="hidden md:block w-[35%]">
-        <SubredditSidebar subName={params.subName} userId={user.id} />
+        <SubredditSidebar subName={params.subName} userId={user?.id} />
       </section>
     </div>
   );
