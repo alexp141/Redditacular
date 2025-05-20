@@ -1,5 +1,10 @@
 import prisma from "@/lib/db";
 import { z } from "zod";
+
+// Force this route to be dynamic
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const validation = z.string().safeParse(url.searchParams.get("userId"));
