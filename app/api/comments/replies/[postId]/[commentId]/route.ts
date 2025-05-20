@@ -3,6 +3,10 @@ import prisma from "@/lib/db";
 import { NextRequest } from "next/server";
 import { z } from "zod";
 
+// Force this route to be dynamic
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const commentRepliesSchema = z.object({
   postId: z.coerce.number(),
   commentId: z.string(),
