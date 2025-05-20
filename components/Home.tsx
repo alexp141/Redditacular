@@ -13,6 +13,12 @@ import {
 } from "./ui/card";
 import SiteWideRules from "./SiteWideRules";
 import Filters from "./Filters";
+import { Suspense } from "react";
+
+// Fallback component to show while loading
+function SearchParamsFallback() {
+  return <div>Loading search parameters...</div>;
+}
 
 export default async function Home({ userId }: { userId?: string }) {
   return (
@@ -23,8 +29,10 @@ export default async function Home({ userId }: { userId?: string }) {
         <section className="col-span-2">
           {/* filters */}
           {/* //filters: top: day,week,month,year,all-time | new, */}
-          <Filters />
-          <PostFeed subName="main" userId={userId} />
+          <Suspense fallback={<SearchParamsFallback />}>
+            <Filters />
+            <PostFeed subName="main" userId={userId} />
+          </Suspense>
         </section>
         {/*  subreddit info panel */}
         <section className="hidden md:block col-span-1 space-y-8">
