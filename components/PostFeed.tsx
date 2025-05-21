@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import SkeletonFeed from "./SkeletonFeed";
 import { useSearchParams } from "next/navigation";
 
+const MAX_POSTS_PER_FETCH = 3;
+
 export default function PostFeed({
   subName,
   userId,
@@ -27,16 +29,14 @@ export default function PostFeed({
   } = useInfiniteQuery({
     queryKey: ["posts", subName, searchParams.toString()],
     queryFn: ({ pageParam }) => getPosts({ pageParam, subName, searchParams }),
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
-      if (
-        lastPage.length < Number(process.env.MAXIMUM_POSTS_PER_FEED) ||
-        lastPage.at(-1)?.id === lastPageParam
-      ) {
+      console.log("last page param", lastPageParam);
+      if (lastPageParam == null || lastPage.length < MAX_POSTS_PER_FETCH) {
         return null;
       }
 
-      return lastPage.at(-1)?.id ?? null;
+      return Number(lastPageParam) + MAX_POSTS_PER_FETCH;
     },
   });
 

@@ -23,7 +23,7 @@ export async function getPosts({
   searchParams: ReadonlyURLSearchParams;
 }) {
   const res = await fetch(
-    `/api/test?subName=${subName}&cursor=${pageParam}&${searchParams.toString()}`
+    `/api/test?subName=${subName}&pageParam=${pageParam}&${searchParams.toString()}`
   );
   const data: PostInfo[] = await res.json();
   return data;
