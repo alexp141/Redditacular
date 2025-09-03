@@ -21,18 +21,29 @@ function subTime(date: Date, type: string = "all-time") {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET(
+  req: Request,
+  { params }: { params: { subName: string } }
+) {
   const searchParams = new URL(req.url).searchParams;
   const pageParam = Number(searchParams.get("pageParam"));
-  const subName = searchParams.get("subName") ?? undefined;
+  const subName = params.subName;
   const dateType = searchParams.get("type") ?? "";
   console.log("subName", subName);
-  let queryData = await prisma.post.findMany({
-    where: {
-      subName: { equals: subName === "main" ? undefined : subName },
-      createdAt: { gte: subTime(new Date(), dateType) },
-    },
 
+  // conditional where clause
+  const whereClause: any = {
+    createdAt: { gte: subTime(new Date(), dateType) },
+  };
+
+  // only add subName filter if it's not "main"
+  // if subName is "main" or undefined, we don't filter by subName at all
+  if (subName !== "main" && subName) {
+    whereClause.subName = subName;
+  }
+
+  let queryData = await prisma.post.findMany({
+    where: whereClause,
     include: {
       author: { select: { username: true } },
       votes: {
