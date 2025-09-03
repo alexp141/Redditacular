@@ -1,16 +1,6 @@
-import Feed from "@/components/Feed";
-import { LucideHouse } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import PostFeed from "./PostFeed";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
 import SiteWideRules from "./SiteWideRules";
 import Filters from "./Filters";
 import { Suspense } from "react";
